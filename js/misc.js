@@ -11,7 +11,7 @@ var photo_recurse_index = 3;
 
 function advance_image(){
     var back_to_first = document.getElementById("back_to_first_image");
-    if(active_photo_index === photo_recurse_index){
+    if(active_photo_index === photo_recurse_index-1){
         back_to_first.style.visibility = "visible"
     } else {
         back_to_first.style.visibility = "hidden"
@@ -20,7 +20,7 @@ function advance_image(){
 
     if(active_photo_index === number_pipeline_photos-1){
         active_photo_index = 0;
-        [].forEach.call(document.querySelectorAll('.pipeline_photo'), function (el) {
+        [].forEach.call(document.querySelectorAll('.pipeline_box'), function (el) {
             el.style.visibility = 'visible';
         });
     } else {
@@ -34,7 +34,7 @@ function advance_image(){
 
 function reset_images(){
     active_photo_index = 0;
-    [].forEach.call(document.querySelectorAll('.pipeline_photo'), function (el) {
+    [].forEach.call(document.querySelectorAll('.pipeline_box'), function (el) {
         el.style.visibility = 'visible';
     });
     document.getElementById("back_to_first_image").style.visibility = 'hidden';
