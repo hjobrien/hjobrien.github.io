@@ -1,0 +1,36 @@
+:root {
+    --slide-distance: 400px;
+    --slide-time: 300ms;
+}
+
+
+.in-view {
+translate3d(100 , 0, 0);
+}
+
+.animation-element {
+    position: relative;
+    opacity: 0;
+}
+
+.animation-element.slide-right {
+    opacity: 0;
+    -moz-transition: all var(--slide-time) linear;
+    -webkit-transition: all var(--slide-time) linear;
+    -o-transition: all var(--slide-time) linear;
+    transition: all var(--slide-time) linear;
+    -moz-transform: translate3d(var(--slide-distance), 0px, 0px);
+    -webkit-transform: translate3d(var(--slide-distance), 0px, 0px);
+    -o-transform: translate(var(--slide-distance), 0px);
+    -ms-transform: translate(var(--slide-distance), 0px);
+    transform: translate3d(var(--slide-distance), 0px, 0px);
+}
+
+.animation-element.slide-right.in-view {
+    opacity: 1;
+    -moz-transform: translate3d(0px, 0px, 0px);
+    -webkit-transform: translate3d(0px, 0px, 0px);
+    -o-transform: translate(0px, 0px);
+    -ms-transform: translate(0px, 0px);
+    transform: translate3d(0px, 0px, 0px);
+}

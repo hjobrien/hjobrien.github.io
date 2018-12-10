@@ -1,0 +1,55 @@
+
+
+
+.skill {
+    position: absolute;
+    font-size: 14pt;
+    font-weight: 500;
+}
+
+.skill-box {
+    border: 2px solid black;
+    min-height: 10em;
+    text-align: right;
+    position: absolute;
+}
+
+.skill-title {
+    /*width: 100%;*/
+    margin-right: 1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-weight: bolder;
+    font-size: 20px;
+    background: #42a1f4;
+}
+
+.vertical-view {
+    width: 100% !important;
+    position: relative !important;
+    height: var(--box-side) !important;
+}
+
+#outer-box {
+    height: calc(3 * var(--box-side));
+    width: 100%;
+}
+
+#middle-box {
+    height: calc(2 * var(--box-side));
+    width: 67%;
+}
+
+#inner-box {
+    height: var(--box-side);
+    width: 33%;
+}
+
+#box-container {
+    height: calc(3 * var(--box-side));
+    width: 100%;
+    position: relative;
+}
