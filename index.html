@@ -1,7 +1,9 @@
 <!doctype html>
 <html class="no-js" lang="">
     <head>
-        <script src="https://use.fontawesome.com/341355cb47.js"></script>
+        <!--<script src="https://use.fontawesome.com/341355cb47.js"></script>-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title></title>
@@ -43,22 +45,70 @@
                 <ul class='nav_links'>
                     <!--<li><div class="col-sm-10"></div></li>-->
                     <li>
-                        <a href="Hank%20O'Brien's%20Resume%20Website.pdf" target="_blank" class="info-button">
+                        <a href="#main-info" class="info-button">
                             <!--<div class="col-sm-1">-->
                             <!--TODO-->
                             <div class="info-box">
-                                <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                Link to each
+                                <i class="fas fa-caret-up" aria-hidden="true"></i>
+                                Back to top
                             </div>
                             <!--</div>-->
                         </a>
                     </li>
                     <li>
-                        <a href="mailto:hank.obrien900@icloud.com?Subject=Re:%20Website:" target="_top" class="info-button">
+                        <a href="#motivation" target="_top" class="info-button">
                             <!--<div class="col-sm-1">-->
                             <!--TODO-->
                             <div class="info-box">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>  subsection of page here
+                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Our Motivation
+                            </div>
+                            <!--</div>-->
+                            <!--TODO: add more of these links-->
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#design" target="_top" class="info-button">
+                            <!--<div class="col-sm-1">-->
+                            <!--TODO-->
+                            <div class="info-box">
+                                <i class="fas fa-caret-down" aria-hidden="true"></i> Design
+                            </div>
+                            <!--</div>-->
+                            <!--TODO: add more of these links-->
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#image-pipeline" target="_top" class="info-button">
+                            <!--<div class="col-sm-1">-->
+                            <!--TODO-->
+                            <div class="info-box">
+                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Image Pipeline
+                            </div>
+                            <!--</div>-->
+                            <!--TODO: add more of these links-->
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#controller" target="_top" class="info-button">
+                            <!--<div class="col-sm-1">-->
+                            <!--TODO-->
+                            <div class="info-box">
+                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Controller
+                            </div>
+                            <!--</div>-->
+                            <!--TODO: add more of these links-->
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#grasping-ex" target="_top" class="info-button">
+                            <!--<div class="col-sm-1">-->
+                            <!--TODO-->
+                            <div class="info-box">
+                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Grasping Examples
                             </div>
                             <!--</div>-->
                             <!--TODO: add more of these links-->
@@ -77,7 +127,7 @@
                 <div class="row main-info subtitle">
                     <h2>Overview</h2>
                 </div>
-                <div class="row main-info">
+                <div id='main-info' class="row main-info">
                     <p>
                         <!--TODO-->
                         Quick summary about the project
@@ -90,19 +140,90 @@
                 <div class="row main-info subtitle">
                     <h2> Detailed overview</h2>
                 </div>
-                <div class="animation-element slide-right">
+                <div id="motivation" class="animation-element slide-right">
                     <div class="project-info">
                         <div class="row">
                             <!--TODO-->
-                            <div class="col-sm-6"><h3>Subsection Name</h3></div>
+                            <div class="col-sm-6"><h3>Motivation</h3></div>
                             <div class="col-sm-6">
                             </div>
                         </div>
                         <div class="row">
                             <!--TODO-->
                             <div class="col-sm-6"><img src="img/stella-logo.png" alt="Stella Logo" height="150px" width="150px"> Images look like this</div>
-                            <div class="col-sm-6"><p>Put some details here
+                            <div class="col-sm-6"><p>Why does anything matter anyway
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="design" class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Design</h3></div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><img src="img/stella-logo.png" alt="Stella Logo" height="150px" width="150px"> Images look like this</div>
+                            <div class="col-sm-6"><p>Stuff about 3D printing here, also about why we put the kinect on the arm
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="image-pipeline" class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Image Pipeline</h3></div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><img src="img/stella-logo.png" alt="Stella Logo" height="150px" width="150px"> Images look like this</div>
+                            <div class="col-sm-6"><p>Hold off on editing this for right now, I want to do some cool stuff with the images
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="controller" class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Controller</h3></div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><img src="img/stella-logo.png" alt="Stella Logo" height="150px" width="150px"> Images look like this</div>
+                            <div class="col-sm-6"><p>Talk about why our proportional controller doesn't suck and why its not boring here
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id='grasping-ex' class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Detail: Sphere Grasping</h3></div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-7">
+                                <iframe width=445px, height=580px src="https://www.youtube.com/embed/HdH3w9qPyoA"> Add the sphere video here</iframe>
+                            </div>
+                            <div class="col-sm-5"><p> some long winded elaboration about how ground breaking and exciting this is,
+                                with a focus on what makes the sphere hard and how this shows particular kinds of robustness to our algo</div>
                         </div>
                     </div>
                 </div>
@@ -111,16 +232,56 @@
                     <div class="project-info">
                         <div class="row">
                             <!--TODO-->
-                            <div class="col-sm-6"><h3>Another Subsection</h3></div>
+                            <div class="col-sm-6"><h3>Detail: Rectangular Grasping</h3></div>
                             <div class="col-sm-6">
                             </div>
                         </div>
                         <div class="row">
                             <!--TODO-->
                             <div class="col-sm-7">
-                                <iframe width=445px, height=580px src="https://www.youtube.com/embed/HdH3w9qPyoA"> Add videos like this</iframe>
+                                <iframe width=445px, height=580px src="https://www.youtube.com/embed/HdH3w9qPyoA"> Add the rectangle video here</iframe>
                             </div>
-                            <div class="col-sm-5"><p> some long winded elaboration about how ground breaking and exciting this is</div>
+                            <div class="col-sm-5"><p> some long winded elaboration about how ground breaking and exciting this is,
+                                with a focus on what makes the rectangular box hard and how this shows particular kinds of robustness to our algo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Detail: Non-uniform Grasping</h3></div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-7">
+                                <iframe width=445px, height=580px src="https://www.youtube.com/embed/HdH3w9qPyoA"> Add the balloon and hat video here</iframe>
+                            </div>
+                            <div class="col-sm-5"><p> some long winded elaboration about how ground breaking and exciting this is,
+                                with a focus on what makes the balloon and hat hard and how this shows particular kinds of robustness to our algo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Detail: Non-Convex Grasping</h3></div>
+
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-7">
+                                <iframe width=445px, height=580px src="https://www.youtube.com/embed/HdH3w9qPyoA"> Add the dumbbell video here</iframe>
+                            </div>
+                            <div class="col-sm-5"><p> some long winded elaboration about how ground breaking and exciting this is,
+                                with a focus on what makes the dumbbell hard and how this shows particular kinds of robustness to our algo</div>
                         </div>
                     </div>
                 </div>
@@ -130,12 +291,14 @@
         </div>
 
 
+
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 
         <script src="js/animations.js"></script>
+        <script src="js/misc.js"></script>
         <script src="js/skill_box_layouts.js"></script>
         <!--<script src="js/parallax.js"></script>-->
 
