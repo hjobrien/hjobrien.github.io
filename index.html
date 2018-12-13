@@ -27,14 +27,15 @@
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
         <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">   
+        <!-- Import LaTeX packages and define operators -->
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
-        <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>-->
+        <!<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>-->
         <!--<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
-        <![endif]-->
+        <!-- <![endif]--> 
     </head>
     <!--<body style="background-image: url(img/temp-background.jpg); background-size: cover">-->
     <body>
@@ -121,7 +122,9 @@
                     <li><div style="width: 10px"></div></li>
                 </ul>
             </nav>
-
+            \(
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}\)
             <div class="container" id="toggle">
                 <div class="row">
                     <h1 class="TitleName" style="margin-bottom: 1em">Generalized Grasping with Sawyer</h1>
@@ -189,39 +192,176 @@
                         </div>
                         <div class="row">
                             <!--TODO-->
-                            <div class="col-sm-6">
+                            <!-- <div class="col-sm-6">
                                 <figure class="stack stack-leaflet active">
-                                    <div class="pipeline_box" id="image_4">
-                                        <img src="img/stella-logo1.png" alt="Stella Logo">
-                                    </div>
-
                                     <div class="pipeline_box" id="image_3">
-                                        <img src="img/stella-logo1.png" alt="Stella Logo">
+                                        <img src="img/angle.png" alt="Stella Logo">
                                     </div>
 
                                     <div class="pipeline_box" id="image_2">
-                                        <img src="img/stella-logo2.png" alt="Stella Logo">
-                                        <img src="img/stella-logo2.png" alt="Stella Logo" style="padding-right: 9px">
+                                        <img src="img/center.png" alt="Stella Logo">
                                     </div>
 
                                     <div class="pipeline_box" id="image_1">
-                                        <img src="img/stella-logo3.png" alt="Stella Logo">
+                                        <img src="img/depth_histogram.png" alt="Stella Logo">
+                                        <img src="img/low_pass.png" alt="Stella Logo" style="padding-right: 9px">
                                     </div>
 
                                     <div class="pipeline_box" id="image_0">
-                                        <img src="img/stella-logo4.png" alt="Stella Logo">
+                                        <img src="img/error_correction.png" alt="Stella Logo">
                                     </div>
 
                                 </figure>
                                     <button class='general_btn' id="next_image_btn">Next Image</button>
                                     <button class='general_btn' id="back_to_first_image" style="visibility: hidden">Back to First Image</button>
-                            </div>
+                            </div> -->
                             <!--<div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Images look like this</div>-->
+
+                            <div class="col-sm-5">
+                                <br>
+                                <center>
+                                    <img src="img/error_correction.png" alt="Depth Map" style="height:200px;">
+                                </center>
+                                <p>
+                                 (1): Depth map of a box on a table. Solid green areas correspond to errored values.
+                                </p>
+                            </div>
+
                             <div class="col-sm-6">
-                                <p>Talk about our image pipeline here </p>
+                                <p>
+                                    <b>Kinect Depth Map and Error Correction:</b>
+                                </p>
+                                <p>
+                                    At the start of the loop, we collect a depth map of the area of interest from the Kinect. The sensor from the kinect is less than perfect. In addition to noise, the Kinect sets the value of pixel's it can't accurately detect depth for to 2048. The values that we care about are generally within the range of 350 and 700. We ignore any values that are clipped to 2048 for classification purposes, and treat these values as part of the background.
+                                </p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                        
+                            <div class="col-sm-5">
+                                <br>
+                                <center>
+                                    <img src="img/depth_histogram.png" alt="Depth Histogram" style="height:200px;">
+                                    <img src="img/gmm.png" alt="Depth Histogram" style="height:200px;">
+                                </center>
+                                <p>
+                                (1): The histogram of depth values observed.
+                                </p>
+                                <p>
+                                (2): Histogram of 2000 samples from the estimated mixture.
+                                </p>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <p>
+                                    <b>Gaussian Mixture Model:</b>
+                                </p>
+                                <p>
+                                    The depth values within the image typically follow a bimodal distribution; a smaller mode for the depth of the object and a larger mode for the depth of the background. This distribution is typically roughly Gaussian, thus we can calssify each pixel using a Guassian Mixture Model to create an image segmentation of object versus background.
+                                </p>
+                                <p>
+                                    We assume the distribution of depth values for the object are i.i.d. and follow the mixture of two Gaussians, where one Guassian corresponds to the object and the other to the background. Let \(v_{ij}\) be the observed value at \((i,j)\), we then maximize our likelihood over possible mixtures of two Gaussians.
+                                     $$\max \limits_{\phi_o, \phi_b, \mu_o, \mu_b, \sigma_o, \sigma_b} \prod_{i,j} p(v_{ij}) \; : $$
+                                     $$p = \phi_o \mathcal{N}(\mu_o, \sigma_o) + \phi_b \mathcal{N}(\mu_b, \sigma_b)$$
+                                     $$\phi_o + \phi_b = 1, \; \phi_o \geq 0 , \; \phi_b \geq 0$$
+                                    This problem can be solved within very few iterations of Expectation Maximization implemented in Scikit Learn (we found 10 iterations to be consistent). Also, while our assupmtions of the the depth values being i.i.d. worked in practice, it is a strong assumption, and future work may explore using conditional probabilities or connectivity for classification.
+                                </p>
 
                             </div>
                         </div>
+                        <br>
+                        <div class="row">
+                        
+                            <div class="col-sm-5">
+                                <br>
+                                <center>
+                                    <img src="img/low_pass.png" alt="Low Pass" style="height:200px;">
+                                    <img src="img/center.png" alt="Center of Mass" style="height:200px;">
+                                </center>
+                                <p>
+                                    (1): Low pass of the depth map.
+                                </p>
+                                <p>
+                                    (2): Resulting segmentation (green is object, purple is background) and center of mass (yellow).
+                                </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>
+                                    <b>Segmentation and Center of Mass:</b>
+                                </p>
+                                <p>
+                                    Once we converge to a viable mixture, we can use it for classification. First, we low pass the image to remove high frequency noise and soften the edges. We found this led to cleaner segmentations than classifying on the original image. We then use our converged mixture model to classify each pixel independently.
+                                </p>
+                                <p>
+                                    Let \(\phi_o^*, \phi_b^*, \mu_o^*, \mu_b^*, \sigma_o^*, \sigma_b^*\) be the optimal parameters to the mixture optimization problem. Our object's depth values should be smaller than the depth values of the background, so without loss of generality let \(\mu_o^* \leq \mu_b^*\). Defining \(p_o = \mathcal{N}(\mu_o^*, \sigma_o^*)\) and \(p_b = \mathcal{N}(\mu_b^*, \sigma_b^*)\), we clasify a pixel value \(v_{ij}\) using the function
+                                    $$f(v_{ij}) = \begin{cases} 1 \; \; \; \; \; \; \; \phi_o^* p_o(v_{ij}) \geq \phi_b^* p_b(v_{ij}) \\
+                                                                0 \; \; \; \; \; \; \; \phi_o^* p_o(v_{ij}) < \phi_b^* p_b(v_{ij})\end{cases}$$
+                                    To find the center of mass of the object, we first assume the object has uniform density. Letting the normalization of the segmentation be a joint probability distribution over the indices, the center of mass is then the expected index.
+                                    $$\begin{bmatrix} c_x \\ c_y \end{bmatrix} = \frac{1}{\sum_{i,j} f(v_{ij})}\sum_{i,j} f(v_{ij}) \begin{bmatrix} i \\ j \end{bmatrix}$$
+                                </p>
+
+                                <p>
+                                    If the object is predicted to be strangely large or small, the observation is ignored and no action is performed. Otherwise, this center of mass is passed to the controller to move the end-affector of the Sawyer (more details below).
+                                </p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                        
+                            <div class="col-sm-5">
+                                <br>
+                                <center>
+                                    <img src="img/toy_angle.png" alt="Angle" style="width:250px;">
+                                    <img src="img/toy_theta_plot.png" alt="Angle" style="width:250px;">
+                                    <img src="img/angle.png" alt="Angle" style="height:200px;">
+                                    <img src="img/theta_plot.png" alt="Angle" style="width:250px;">
+                                </center>
+                                <p>
+                                    (1): Synthetic dumbell (green) with the angle our algorithm would grasp at.
+                                </p>
+                                <p>
+                                    (2): Plot of the objective function w.r.t. theta. Optimum is achieved at \(\theta = \pm \frac{\pi}{2}\).
+                                </p>
+                                <p>
+                                    (3): Real box (green) with grasp angle (yellow).
+                                </p>
+                                <p>
+                                    (4): Plot of the objective function w.r.t. theta. Optimum is achieved at \(\theta \approx \frac{\pi}{25}\).
+                                </p>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <p>
+                                    <b>Grasp Angle:</b>
+                                </p>
+                                <p>
+                                    Because our gripper was the two-prong gripper, adapting to specific objects mainly required determining at which angle to grasp the object.
+                                </p>
+                                <p> 
+                                    First we continue to assume the object has uniform density. We make an additional assumption that the object is simply connected. We then center the grasp above the detected center of mass, as this would balance the mass on either side of the gripper.
+                                </p>
+                                <p>
+                                    Before lowering the end-affector, we determine an angle to rotate the gripper by. We approached this problem using a heuristic and approximating a corresponding optimization problem. When picking up objects that are uniform density, a natural approach would be to grab the object around the plane passing through the center of mass that minimizes the cross sectional area. For example, a human picks up a dumbell around the small cylinder connecting the two large pieces, as opposed to across the ends of the two large pieces. We now formalize a way to solve for this heuristic.
+                                </p>
+
+                                <p>
+                                    First, we define the indicator function \(f: \mathbb{R}^2 \rightarrow 0\) that is centered at the center of mass (center of mass corresponds to \((0,0)\)) where \(f(x,y) = 1\) if the object occupies \((x,y)\) and \(f(x,y)=0\) otherwise.
+                                </p>
+
+                                <p>
+                                    A line passing through the origin at angle \(\theta\) is then defined as
+                                    $$\mathcal{L(\theta)} = \left \{ (t \cos \theta , t \sin \theta)  \; | \; t \in \mathbb{R} \right \}$$
+                                    Our goal is to find a line passing through the origin that minimizes the intersection of the line and the object. Thus, our optimization problem is
+                                    $$\theta^* = \argmin \limits_{\theta \in \left [\frac{-\pi}{2}, \frac{\pi}{2} \right]} \int_{-\infty}^{\infty} f(t \cos \theta, t \sin \theta) \text{d}t$$
+                                    The objective function is \(\pi\)-periodic, allowing us to restrict the domain. In general, the objective function is not convex on \(theta\). However, for reasonable applications, grid search is effective at finding a close to optimal solution. Additionally, if the object is a convex set, the objective function is Lipschitz continuous on \(\theta\) allowing for a theoretical guarantee of obtaining the optimal solution using bisection method.
+                                </p>
+                                <p>
+                                    After having found an angle to grasp at, the end-affector is rotated by that angle and then lowered to the object.
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -316,31 +456,6 @@
                             </div>
                             <div class="col-sm-5"><p> some long winded elaboration about how ground breaking and exciting this is,
                                 with a focus on what makes the dumbbell hard and how this shows particular kinds of robustness to our algo</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="animation-element slide-right">
-                    <div class="project-info">
-                        <div class="row">
-                            <!--TODO-->
-                            <div class="col-sm-12"><h3>Detail: Optimality of Convexly-Linearly-Seperable Objects</h3></div>
-
-                            <div class="col-sm-6">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!--TODO-->
-
-                            <div class="col-sm-12"><p> 
-                            Under certain conditions, it is possible to obtain the optimal solution to the optimization problem for the angle. While this isn't explored in the coding and demo of the project, we outline a proof of this here.
-
-                            <br> <br>
-                            <b>Defintion: </b> We say that the set \(\mathcal{X} \subset \mathbb{R}^n\) is Convexly-Linearly-Seperable at the point \(x_0 \in \mathbb{R}^n\) if there exists a hyper-plane passing through \(x_0\) that seperates the set \(\mathcal{X}\) into two convex sets. That is two say, \(\exists a \in \mathbb{R}^{n}\) such that the sets
-                            $$\{x \in \mathcal{X} \; | \; a^T(x-x_0) > 0\}$$
-                            $$\{x  \in \mathcal{X} \; | \; a^T(x-x_0) < 0\}$$
-                            are both convex.
-                            </div>
                         </div>
                     </div>
                 </div>
