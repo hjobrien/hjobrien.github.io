@@ -59,11 +59,22 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#motivation" target="_top" class="info-button">
+                        <a href="#Introduction" target="_top" class="info-button">
                             <!--<div class="col-sm-1">-->
                             <!--TODO-->
                             <div class="info-box">
-                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Our Motivation
+                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Introduction
+                            </div>
+                            <!--</div>-->
+                            <!--TODO: add more of these links-->
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#Design" target="_top" class="info-button">
+                            <!--<div class="col-sm-1">-->
+                            <!--TODO-->
+                            <div class="info-box">
+                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Design
                             </div>
                             <!--</div>-->
                             <!--TODO: add more of these links-->
@@ -75,7 +86,7 @@
                             <!--<div class="col-sm-1">-->
                             <!--TODO-->
                             <div class="info-box">
-                                <i class="fas fa-caret-down" aria-hidden="true"></i> Design
+                                <i class="fas fa-caret-down" aria-hidden="true"></i> Implementation
                             </div>
                             <!--</div>-->
                             <!--TODO: add more of these links-->
@@ -83,11 +94,11 @@
                     </li>
 
                     <li>
-                        <a href="#image-pipeline" target="_top" class="info-button">
+                        <a href="#Results" target="_top" class="info-button">
                             <!--<div class="col-sm-1">-->
                             <!--TODO-->
                             <div class="info-box">
-                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Image Pipeline
+                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Results
                             </div>
                             <!--</div>-->
                             <!--TODO: add more of these links-->
@@ -95,55 +106,47 @@
                     </li>
 
                     <li>
-                        <a href="#controller" target="_top" class="info-button">
+                        <a href="#Conclusion" target="_top" class="info-button">
                             <!--<div class="col-sm-1">-->
                             <!--TODO-->
                             <div class="info-box">
-                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Controller
+                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Conclusion
                             </div>
                             <!--</div>-->
                             <!--TODO: add more of these links-->
                         </a>
                     </li>
 
-                    <li>
-                        <a href="#grasping-ex" target="_top" class="info-button">
-                            <!--<div class="col-sm-1">-->
-                            <!--TODO-->
-                            <div class="info-box">
-                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Grasping Examples
-                            </div>
-                            <!--</div>-->
-                            <!--TODO: add more of these links-->
-                        </a>
-                    </li>
+                    
 
                     <!--This is padding-->
                     <li><div style="width: 10px"></div></li>
                 </ul>
             </nav>
+
+            <!-- Define LaTeX stuff -->
             \(
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}\)
+            \DeclareMathOperator*{\argmin}{arg\,min}\)
+
+
             <div class="container" id="toggle">
                 <div class="row">
                     <h1 class="TitleName" style="margin-bottom: 1em">Generalized Grasping with Sawyer</h1>
                 </div>
-                <div class="row main-info subtitle">
-                    <h2>Overview</h2>
+                <div id="Introduction" class="row main-info subtitle">
+                    <h2>Introduction</h2>
                 </div>
                 <div id='main-info' class="row main-info">
                     <p>
-                        <!--TODO-->
-                        Quick summary about the project
+                        The 
                     </p>
                     <p>
                         In multiple paragraphs
                     </p>
                 </div>
 
-                <div class="row main-info subtitle">
-                    <h2> Detailed overview</h2>
+                <div id="design" class="row main-info subtitle">
+                    <h2> Design</h2>
                 </div>
                 <div id="motivation" class="animation-element slide-right">
                     <div class="project-info">
@@ -162,11 +165,16 @@
                     </div>
                 </div>
 
-                <div id="design" class="animation-element slide-right">
+
+                <div id="Implementation" class="row main-info subtitle">
+                    <h2> Implementation</h2>
+                </div>
+
+                <div id="Hardware" class="animation-element slide-right">   
                     <div class="project-info">
                         <div class="row">
                             <!--TODO-->
-                            <div class="col-sm-6"><h3>Design</h3></div>
+                            <div class="col-sm-6"><h3>Hardware</h3></div>
                             <div class="col-sm-6">
                             </div>
                         </div>
@@ -181,6 +189,7 @@
                         </div>
                     </div>
                 </div>
+
 
                 <div id="image-pipeline" class="animation-element slide-right">
                     <div class="project-info">
@@ -346,7 +355,7 @@
                                 </p>
 
                                 <p>
-                                    First, we define the indicator function \(f: \mathbb{R}^2 \rightarrow 0\) that is centered at the center of mass (center of mass corresponds to \((0,0)\)) where \(f(x,y) = 1\) if the object occupies \((x,y)\) and \(f(x,y)=0\) otherwise.
+                                    First, we define the indicator function \(f: \mathbb{R}^2 \rightarrow {0, 1}\) that is centered at the center of mass (center of mass corresponds to \((0,0)\)) where \(f(x,y) = 1\) if the object occupies \((x,y)\) and \(f(x,y)=0\) otherwise.
                                 </p>
 
                                 <p>
@@ -382,8 +391,11 @@
                     </div>
                 </div>
 
+                <div id="Results" class="row main-info subtitle">
+                    <h2>Results</h2>
+                </div>
 
-                <div id='grasping-ex' class="animation-element slide-right">
+                <div id="grasping-ex" class="animation-element slide-right">
                     <div class="project-info">
                         <div class="row">
                             <!--TODO-->
@@ -460,7 +472,18 @@
                     </div>
                 </div>
 
-
+                <div id="Conclusion" class="row main-info subtitle">
+                    <h2>Conclusion</h2>
+                </div>
+                <div id='main-info' class="row main-info">
+                    <p>
+                        The 
+                    </p>
+                    <p>
+                        In multiple paragraphs
+                    </p>
+                </div>
+                <br>
             </div>
 
         </div>
