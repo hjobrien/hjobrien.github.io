@@ -357,7 +357,7 @@
                                     The objective function is \(\pi\)-periodic, allowing us to restrict the domain. In general, the objective function is not convex on \(\theta\). However, for reasonable applications, grid search is effective at finding a close to optimal solution. Additionally, if the object is a convex set, the objective function is Lipschitz-continuous on \(\theta\) allowing for a theoretical guarantee of obtaining the optimal solution using bisection method.
                                 </p>
                                 <p>
-                                    After having found an angle to grasp at, the end-affector is rotated by that angle and then lowered to the object.
+                                    After having found an angle to grasp at, the end-affector is rotated by that angle and then lowered to the object. For objects that aren't simply connected (such as a donut), this algorithm might have a harder time as it would attempt to grasp around the entire object as opposed to using the holes in the object to its advantage. This is an area we hope to explore more in the future.
                                 </p>
                             </div>
                         </div>
