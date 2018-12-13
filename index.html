@@ -354,7 +354,7 @@
                                     $$\mathcal{L(\theta)} = \left \{ (t \cos \theta , t \sin \theta)  \; | \; t \in \mathbb{R} \right \}$$
                                     Our goal is to find a line passing through the origin that minimizes the intersection of the line and the object. Thus, our optimization problem is
                                     $$\theta^* = \argmin \limits_{\theta \in \left [\frac{-\pi}{2}, \frac{\pi}{2} \right]} \int_{-\infty}^{\infty} f(t \cos \theta, t \sin \theta) \text{d}t$$
-                                    The objective function is \(\pi\)-periodic, allowing us to restrict the domain. In general, the objective function is not convex on \(theta\). However, for reasonable applications, grid search is effective at finding a close to optimal solution. Additionally, if the object is a convex set, the objective function is Lipschitz continuous on \(\theta\) allowing for a theoretical guarantee of obtaining the optimal solution using bisection method.
+                                    The objective function is \(\pi\)-periodic, allowing us to restrict the domain. In general, the objective function is not convex on \(\theta\). However, for reasonable applications, grid search is effective at finding a close to optimal solution. Additionally, if the object is a convex set, the objective function is Lipschitz-continuous on \(\theta\) allowing for a theoretical guarantee of obtaining the optimal solution using bisection method.
                                 </p>
                                 <p>
                                     After having found an angle to grasp at, the end-affector is rotated by that angle and then lowered to the object.
