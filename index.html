@@ -180,7 +180,54 @@
                                 <img src="img/cuff_render_top.png" alt="3D printed cuff, top view" height="300px" width="300px">
                                 <img src="img/cuff_render_bottom.png" alt="3D printed cuff, bottom view" height="300px" width="300px">
                             </div>
-                            <div class="col-sm-6"><p>Stuff about 3D printing here, also about why we put the kinect on the arm
+                            <div class="col-sm-6">
+                                <p>We knew that we wanted to use the kinect sensor to scan the table as our primary
+                                    method of sensing. Our team has some experience with 3D modeling and 3D printing,
+                                    so we quickly settled on 3D printing a kinect mount to sit on the metal interface plate below
+                                    the sawyer's zero-g cuff.
+
+                                    After some discussion with the TAs we found out that the most common technique
+                                    for acquiring kinect input was to mount it on a fixed tripod, find the transform between
+                                    the kinect sensor and the table, and obtain our data from that. We elected not to pursue
+                                    this approach ourselves for two reasons:
+
+                                    <ul>
+                                        <li>The tripod approach is very sensitive and prone to setup details and tuning
+                                            <ul>
+                                                <li>One of our goals with this project was to be robust to variations in the environment,
+                                                specifically with different shaped objects positioned in different parts of the
+                                                grasping region. If we relied on manually setting up the kinect on a tripod somewhere in the room
+                                                before each attempt, not only would we spend a great deal of time making sure it was in exaclty the correct
+                                                position (or tuning programmatic constants), we would also risk us or others in the lab
+                                                bumping the tripod and forcing us to recalibrate frequently</li>
+                                            </ul>
+                                        </li>
+                                        <li> The angle of scans produced from a kinect-mounted tripod is highly suboptimal
+                                            <ul>
+                                                <li>
+                                                    When we were determining where to move the arm to grasp an object and also how to grasp it,
+                                                    we relied heavily on the top-down nature of our scans, they enabled us to see the object from
+                                                    the same perspective our gripper would be seeing it from, and also allowed us
+                                                    to change the angle from which we saw the object as we adjusted the robot arm.
+                                                    This feedback proved especially vital to our final approach, specifically in that it allowed us to use a closed
+                                                    loop controller for arm movement, which dramatically improved our
+                                                    results over earlier attempts.
+                                                </li>
+                                                <li>Furthermore, we would not be able to distinguish gripping patterns for wide classes of objects if we used the tripod approach
+                                                In the case of the rectangular box, having the overhead view allowed us to find the short axis of the box
+                                                which was the only direction we were able to grip it in. For more complicated objects like the hat, its irregular
+                                                structure would have been impossible to grasp without an overhead view.</li>
+                                            </ul>
+
+
+                                        </li>
+                                    <li>
+                                        With an eye to future work, when the object's top becomes highly textured, such as in the case
+                                        of a lego block, it would be useful to incorporate diffent kinect scan angles to improve the resolution and grasp quality of our approach.
+                                        However, putting the kinect on the tripod fixes the data angle, and would prevent us from pursing such a modification in the future.
+                                    </li>
+                                    </ul>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -266,7 +313,7 @@
                                     The depth values within the image typically follow a bimodal distribution; a smaller mode for the depth of the object and a larger mode for the depth of the background. This distribution is typically roughly Gaussian, thus we can calssify each pixel using a Guassian Mixture Model to create an image segmentation of object versus background.
                                 </p>
                                 <p>
-                                    We assume the distribution of depth values for the object are i.i.d. and follow the mixture of two Gaussians, where one Guassian corresponds to the object and the other to the background. Let \(v_{ij}\) be the observed value at \((i,j)\), we then maximize our likelihood over possible mixtures of two Gaussians.
+                                    We assume the distribution of depth values for the object are i.i.d. and follow the mixture of two Gaussians, where one Gaussian corresponds to the object and the other to the background. Let \(v_{ij}\) be the observed value at \((i,j)\), we then maximize our likelihood over possible mixtures of two Gaussians.
                                      $$\max \limits_{\phi_o, \phi_b, \mu_o, \mu_b, \sigma_o, \sigma_b} \prod_{i,j} p(v_{ij}) \; : $$
                                      $$p = \phi_o \mathcal{N}(\mu_o, \sigma_o) + \phi_b \mathcal{N}(\mu_b, \sigma_b)$$
                                      $$\phi_o + \phi_b = 1, \; \phi_o \geq 0 , \; \phi_b \geq 0$$
@@ -394,6 +441,13 @@
 
                 <div id="Results" class="row main-info subtitle">
                     <h2>Results</h2>
+                    <div class="row">
+                        <!--TODO-->
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6">
+                            lets put the gifs from the presentation here after a paragraph describing our results
+                        </div>
+                    </div>
                 </div>
 
                 <div id="grasping-ex" class="animation-element slide-right">
