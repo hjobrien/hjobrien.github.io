@@ -23,7 +23,7 @@
 
 
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -241,7 +241,7 @@
                             <div class="col-sm-7">
                                 <iframe width=445px, height=580px src="https://www.youtube.com/embed/HdH3w9qPyoA"> Add the rectangle video here</iframe>
                             </div>
-                            <div class="col-sm-5"><p> some long winded elaboration about how ground breaking and exciting this is,
+                            <div class="col-sm-5"><p> a^2=b^2 + c^2$. some long winded elaboration about how ground breaking and exciting this is,
                                 with a focus on what makes the rectangular box hard and how this shows particular kinds of robustness to our algo</div>
                         </div>
                     </div>
@@ -285,6 +285,32 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-12"><h3>Detail: Optimality of Convexly-Linearly-Seperable Objects</h3></div>
+
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+
+                            <div class="col-sm-12"><p> 
+                            Under certain conditions, it is possible to obtain the optimal solution to the optimization problem for the angle. While this isn't explored in the coding and demo of the project, we outline a proof of this here.
+
+                            <br> <br>
+                            <b>Defintion: </b> We say that the set \(\mathcal{X} \subset \mathbb{R}^n\) is Convexly-Linearly-Seperable at the point \(x_0 \in \mathbb{R}^n\) if there exists a hyper-plane passing through \(x_0\) that seperates the set \(\mathcal{X}\) into two convex sets. That is two say, \(\exists a \in \mathbb{R}^{n}\) such that the sets
+                            $$\{x \in \mathcal{X} \; | \; a^T(x-x_0) > 0\}$$
+                            $$\{x  \in \mathcal{X} \; | \; a^T(x-x_0) < 0\}$$
+                            are both convex.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
 
