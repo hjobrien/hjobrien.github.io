@@ -136,7 +136,7 @@
                 <div id="Introduction" class="row main-info subtitle">
                     <h2>Introduction</h2>
                 </div>
-                <div id='main-info' class="row main-info">
+                <div id='overview' class="row main-info">
                     <p>
                         The 
                     </p>
@@ -166,7 +166,7 @@
                 </div>
 
 
-                <div id="Hardware" class="animation-element slide-right">   
+                <div id="Hardware" class="animation-element slide-right">
                     <div class="project-info">
                         <div class="row">
                             <!--TODO-->
@@ -189,7 +189,7 @@
                                     After some discussion with the TAs we found out that the most common technique
                                     for acquiring kinect input was to mount it on a fixed tripod, find the transform between
                                     the kinect sensor and the table, and obtain our data from that. We elected not to pursue
-                                    this approach ourselves for two reasons:
+                                    this approach ourselves for three reasons:
 
                                     <ul>
                                         <li>The tripod approach is very sensitive and prone to setup details and tuning
@@ -290,7 +290,7 @@
                         </div>
                         <br>
                         <div class="row">
-                        
+
                             <div class="col-sm-5">
                                 <br>
                                 <center>
@@ -324,7 +324,7 @@
                         </div>
                         <br>
                         <div class="row">
-                        
+
                             <div class="col-sm-5">
                                 <br>
                                 <center>
@@ -360,7 +360,7 @@
                         </div>
                         <br>
                         <div class="row">
-                        
+
                             <div class="col-sm-5">
                                 <br>
                                 <center>
@@ -390,7 +390,7 @@
                                 <p>
                                     Because our gripper was the two-prong gripper, adapting to specific objects mainly required determining at which angle to grasp the object.
                                 </p>
-                                <p> 
+                                <p>
                                     First we continue to assume the object has uniform density. We make an additional assumption that the object is simply connected. We then center the grasp above the detected center of mass, as this would balance the mass on either side of the gripper.
                                 </p>
                                 <p>
@@ -436,6 +436,57 @@
 
                 <div id="Implementation" class="row main-info subtitle">
                     <h2> Implementation</h2>
+                </div>
+
+                <div id="hardware-imp" class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Hardware Implementation</h3></div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6">
+                                <img src="img/cuff_render_bottom.png" alt="3D printed cuff, bottom view" height="300px" width="300px">
+
+                                <p style="min-height: 24px"></p>
+                                <p> There are two primary components to our design, the blue cuff in the center of the image, and the two black clips which retain the kinect sensor itself.
+                                These are bolted onto the blue cuff. All plastic parts were 3D printed, we used both the Cory Supernode and the Moffit Makerspace
+                                </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p> When we were going about designing our Kinect mount, we had two primary designs.
+                                    The first was one that would interface using screws to the Reflex Takktile gripper,
+                                    in much the same way that Nandita's group did in a past semester. However, when it
+                                    became clear that we were going to switch over to the electric parallel gripper,
+                                    we had to design a new interface.</p>
+
+                                <p>We ended up designing the cuff to sit around the metal wrist of Sawyer for a couple reasons.
+                                Firstly, we wanted to make installation and removal of our interface quick and easy, so avoiding more
+                                screws and bolts was appealing. Secondly, because the wire connecting the parallel gripper to Sawyer is very short,
+                                it would be challenging to slip an interface plate between the gripper and the arm, to say nothing of having to get new longer screws
+                                to screw the gripper on that would be long enough to pass through our interface. However, because we were no longer using screws,
+                                we faced the issue of keeping our interface in the same position for each round. We solved this using two techniques.</p>
+
+                                <p>To try to constrain our interface rotationally, we started by simply desnging the part to have close to a friction fit on the arm,
+                                which then let us add tape to the inside of the part, prodiucing a good friction fit. Note the curved plastic arcs coming off the blue
+                                piece in the image, these were used to start the interface in the same position each time we installed the gripper. We would position the blue plastic
+                                piece in such a way around the cuff that one of the arcs would be in contact with the electric parallel gripper. Originally our hope
+                                with these arcs was to snugly fit around the curve in the gripper itself, but that proved too challening to design and the friction-fit approach
+                                worked suitably well that we continued with that.</p>
+
+                                <p>The black kinect clips are designed to snugly fit around the kinect, and are designed a few milimeters too thin
+                                in order to utilize the flexing of the plastic to keep the kinect in position. Experimentally, they kept the kinect from slipping
+                                even when held such that the kinect opening was parallel to the floor </p>
+
+                                <p>As a future extension, it would be good to change this part to one that is screwed onto the robot arm itself to increase repeatability
+                                of our approach. We made that tradeoff primarily for time reasons for this project, but a rigidly attrached end effector would increase reliability
+                                 and its disadvantages would be mitigate by not having to install and uninstall it frequently.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -530,7 +581,7 @@
                 <div id="Conclusion" class="row main-info subtitle">
                     <h2>Conclusion</h2>
                 </div>
-                <div id='main-info' class="row main-info">
+                <div id='conclusion-text' class="row main-info">
                     <p>
                         The 
                     </p>
