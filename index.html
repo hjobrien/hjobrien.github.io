@@ -912,6 +912,40 @@
                     </div>
                 </div>
 
+                <div class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Controller</h3></div>
+
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6">
+                                <img src="img/controller_img.png" alt="controller image">
+                                <p>(1): the initial scan position (approximate)</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>The principle challenge our controller had to solve was that of converting the dx,dy
+                                in the image (measured in pixels) to a dx, dy in the real world, measured in meters.
+                                We noticed that the images freenect (our open Kinect interface) produced were created based on the following rule:
+                                </p>
+
+                                <p>the value at pixel (i,j) corresponds the distance that point is in the real world from the sensor, in millimeters</p>
+
+                                <p>We interpreted this rule to mean that the images were in some way processed to have a useful structure, and then tuned
+                                our controller constant to take as input the dx,dy (pixels) and output dx,dy(meters), which we found to work well experimentally</p>
+
+                                <p>If this controller ended up not working, we considered decaying our controller constant harmonically but this presented the tradeoff
+                                that we would not be able to move the object on the workspace after execution began, because the constant would have already decayed.
+                                We also considered using a PID controller, but found that the added complexity was not necessary here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="Results" class="row main-info subtitle">
                     <h2>Results</h2>
                 </div>
