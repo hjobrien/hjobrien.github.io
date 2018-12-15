@@ -297,7 +297,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li> The angle of scans produced from a kinect-mounted tripod is highly suboptimal
+                                    <li> The angle of scans produced from a kinect-mounted tripod is suboptimal
                                         <ul>
                                             <li>
                                                 When we were determining where to move the arm to grasp an object and also how to grasp it,
@@ -728,11 +728,24 @@
 
                 <div id="Results" class="row main-info subtitle">
                     <h2>Results</h2>
-                    <div class="row">
-                        <!--TODO-->
-                        <div class="col-sm-6"></div>
-                        <div class="col-sm-6">
-                            lets put the gifs from the presentation here after a paragraph describing our results
+                </div>
+
+                <div id="hardware-imp" class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Final Product</h3></div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6">
+                                <img src="img/grab-photos.png" alt="photos of our project grabbing different objects" height="200px" width="389px">
+                            </div>
+                            <div class="col-sm-6">
+                                <p> Putting everything together, our system is able to perform robustly in grasping and lifting a variety of objects. Upon testing on different shapes and positions for objects, we found that our system was able to reliably locate, actuate to the correct position, rotate to the correct orientation, and grasp the object on several iterations. In practice, we saw that regardless of the amount of synthetic (sometimes adversarial) movement/rotation of the object, our system was able to use the designed controller in order to perform its task and find and grasp the object. In order to test the various aspects of our system, and to test the robustness along each axis of our goal, we present scenarious below in which the system is robust to a different category of difficulty, and what it must have done correctly in order to achieve a proper grasp. </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -750,8 +763,7 @@
                             <div class="col-sm-7">
                                 <iframe width="440" height="315" src="https://www.youtube.com/embed/qy7AVRVV_Bw">Sphere</iframe>
                             </div>
-                            <div class="col-sm-5"><p> some long winded elaboration about how ground breaking and exciting this is,
-                                with a focus on what makes the sphere hard and how this shows particular kinds of robustness to our algo</div>
+                            <div class="col-sm-5"><p> The first example we look at is that of a spherical object, in this case, a tennis ball. If we break our actuation system down in to two different aspects related to the grasping of the object itself: translation and rotation, we can see that in the case of a spherical object, translational correctness if far more important than rotational correctness. This is true because if we translationally are imprecise in our movement, the parallel gripper will attempt to grip off center of the sphere and will slip off of the object, but any rotation that our system decides to make will not have an effect(as the object is rotationally symmetrical). In the video to the left, we can see that our system is able to grasp the sphere with precise translational movement. </p></div>
                         </div>
                     </div>
                 </div>
@@ -769,8 +781,7 @@
                             <div class="col-sm-7">
                                 <iframe width="440" height="315" src="https://www.youtube.com/embed/5q6qTnEPcz4">Rectangular Prism</iframe>
                             </div>
-                            <div class="col-sm-5"><p> a^2=b^2 + c^2$. some long winded elaboration about how ground breaking and exciting this is,
-                                with a focus on what makes the rectangular box hard and how this shows particular kinds of robustness to our algo</div>
+                            <div class="col-sm-5"><p> The second example we look at is that of a rectangular prism shaped object, a cardboard box. Similarly, we can break our actuation system down into two parts as in the previous example and see that for this object, our system can be given slack on translational correctness, but must be rotationally precise due to the shape of the object. For this shape, any grasp along the long side of the box can be done to achieve a good grasp, but any rotation that does not have an angle for which the parallel grippers lie directly on opposite sides of the long side of the box will result in either a complete inability to lift the object or slipping along the sides which may also lead to a fail unless the object is coerced into a position in which the parallel grippers are able to grab the object (which is still not ideal). In the video to the left, we see that our system is able to grab the box with precise rotational movement. </p></div>
                         </div>
                     </div>
                 </div>
@@ -788,8 +799,7 @@
                             <div class="col-sm-7">
                                 <iframe width="440" height="315" src="https://www.youtube.com/embed/ah8KYrp9HeU">Balloon</iframe>
                             </div>
-                            <div class="col-sm-5"><p> some long winded elaboration about how ground breaking and exciting this is,
-                                with a focus on what makes the balloon and hat hard and how this shows particular kinds of robustness to our algo</div>
+                            <div class="col-sm-5"><p> The third example we look at is that of an object that is not uniform in shape and has a surface that may be difficult to sense for our system, a hat. If we look at our sensing system, we can see that we rely upon a Gaussian Mixture Model (GMM) in order to estimate the difference between the object on the table and the table itself. If we think about the surface of the hat we use, we can see that it is composed of more than one surface and that the GMM may have trouble understanding difference in levels. However, by using thresholding for our histogram data we collect, we are able to reliably understand the surface of our object and use it for our rotation and movement calculations. In the video to the left, we see that our system is able to grab the hat, but does have slight trouble locking onto the object as the surface is a confusing shape to understand given the kinect data, and our process to separate the object from the table. </p></div>
                         </div>
                     </div>
                 </div>
@@ -808,13 +818,12 @@
                             <div class="col-sm-7">
                                 <iframe width="440" height="315" src="https://www.youtube.com/embed/CkU-dl9OJFs">Dumbbell</iframe>
                             </div>
-                            <div class="col-sm-5"><p> some long winded elaboration about how ground breaking and exciting this is,
-                                with a focus on what makes the dumbbell hard and how this shows particular kinds of robustness to our algo</div>
+                            <div class="col-sm-5"><p> Finally, the last example we look at is that of an object which has a non-convex shape when viewed from the perspective of the kinect, a dumbbell. In terms of our sensing system, this object must have both translational and rotational accuracy when grasped, as the object must be grasped within a certain range translationally, and must also be grasped within a certain range rotationally. In the video to the left, we see our system is able to grab the dumbbell, showing robustness to both rotational and translational actuation, as well as robustness in sensing as the shape is not of the usual class of an object. </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="Conclusion" class="row main-info subtitle">
+                <div id="Conclusions" class="row main-info subtitle">
                     <h2>Conclusion</h2>
                 </div>
                 <div id='conclusion-text' class="row main-info">
@@ -828,15 +837,7 @@
 
 
                 <div id="Team" class="row main-info subtitle">
-                    <h2>Conclusion</h2>
-                </div>
-                <div id='team-text' class="row main-info">
-                    <p>
-                        The
-                    </p>
-                    <p>
-                        In multiple paragraphs
-                    </p>
+                    <h2>Team</h2>
                 </div>
                 <div id="Hank" class="animation-element slide-right">
                     <div class="project-info">
@@ -886,7 +887,7 @@
                         </div>
                         <div class="row">
                             <!--TODO-->
-                            <div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Arjun Picture</div>
+                            <div class="col-sm-6"><img src="img/taho.jpeg" alt="Stella Logo" height="150px" width="150px"></div>
                             <div class="col-sm-6">
                                 <p>Arjun Bio </p>
                                 <p>Arjun Contributions </p>
