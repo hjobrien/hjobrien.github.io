@@ -954,7 +954,7 @@
                         <div class="row">
                             <!--TODO-->
                             <div class="col-sm-6">
-                                <img src="img/grab-photos.png" alt="photos of our project grabbing different objects" height="200px" width="389px">
+                                <img src="img/grab-photos.png" alt="photos of our project grabbing different objects" height="220px" width="430px">
                             </div>
                             <div class="col-sm-6">
                                 <p> Putting everything together, our system is able to perform robustly in grasping and lifting a variety of objects. Upon testing on different shapes and positions for objects, we found that our system was able to reliably locate, actuate to the correct position, rotate to the correct orientation, and grasp the object on several iterations. In practice, we saw that regardless of the amount of synthetic (sometimes adversarial) movement/rotation of the object, our system was able to use the designed controller in order to perform its task and find and grasp the object. In order to test the various aspects of our system, and to test the robustness along each axis of our goal, we present scenarious below in which the system is robust to a different category of difficulty, and what it must have done correctly in order to achieve a proper grasp. </p>
@@ -1010,7 +1010,7 @@
                         <div class="row">
                             <!--TODO-->
                             <div class="col-sm-7">
-                                <iframe width="502" height="360" src="https://www.youtube.com/embed/ah8KYrp9HeU">Balloon</iframe>
+                                <iframe width="502" height="360" src="https://www.youtube.com/embed/aGL_1sGfrwE">Hat</iframe>
                             </div>
                             <div class="col-sm-5"><p> The third example we look at is that of an object that is not uniform in shape and has a surface that may be difficult to sense for our system, a hat. If we look at our sensing system, we can see that we rely upon a Gaussian Mixture Model (GMM) in order to estimate the difference between the object on the table and the table itself. If we think about the surface of the hat we use, we can see that it is composed of more than one surface and that the GMM may have trouble understanding difference in levels. However, by using thresholding for our histogram data we collect, we are able to reliably understand the surface of our object and use it for our rotation and movement calculations. In the video to the left, we see that our system is able to grab the hat, but does have slight trouble locking onto the object as the surface is a confusing shape to understand given the Kinect data, and our process to separate the object from the table. </p></div>
                         </div>
@@ -1148,18 +1148,18 @@
 
                     <h3>Our Code:</h3>
                     <ul>
-                        <li>The primary deliverable (kinematics, pipeline, controller, etc)</li>
-                        <li>This Website</li>
+                        <li><a href="https://github.com/azahed98/Grasping-106a-project">The primary deliverable (kinematics, pipeline, controller, etc)</a></li>
+                        <li><a href="https://github.com/hjobrien/hjobrien.github.io">This Website</a></li>
                     </ul>
 
                     <h3>Other Videos</h3>
                     <ul>
-                        <li style="font-weight: bolder"> Do we have any other videos?</li>
+                        <li style="font-weight: bolder"><iframe width="502" height="360" src="https://www.youtube.com/embed/ah8KYrp9HeU">Balloon</iframe></li>
                     </ul>
 
                     <h3>Miscellaneous</h3>
                     <ul>
-                        <li>Our presentation</li>
+                        <li><a href="https://docs.google.com/presentation/d/1P2fqW2n1UEIhvDYm5KzOmy-Wy6YOxORS9bzeEJNgmrg/edit?usp=sharing">Our presentation</a></li>
                     </ul>
 
                 </div>
