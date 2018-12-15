@@ -138,10 +138,13 @@
                 </div>
                 <div id='overview' class="row main-info">
                     <p>
-                        
+                        Grasping objects is one the central challenges of robobtics, finding applications in nearly usage of robotics from industry to medicine. It is an active area of research, and considered an exceptionally difficult task in the field of Reinforcement Learning.
                     </p>
                     <p>
-                        In multiple paragraphs
+                        The application and reputation of grasping inspired us to form our own approach to the problem. The goal of our project was to design our own algorithm to detect, localize, and grasp general objects in a controlled environment. Through our design choices, we sought to maximize the set of objects we could grasp. To do this, we tackled problems of detecting general objects independent of shape and size, determining grasping angles, and controlling the end-affector to always grab the object without collisions. This led to an original implementation designed and implemented independently of similar research.
+                    </p>
+                    <p>
+                        This project can be applied to any application requiring grasping of objects that cannot be determined beforehand. For example, it can be used for robot arms in industrial plants that need to move over several different objects, in emergency situations where rubble can take on any shape, or in medicine where there are hundreds of different tools. 
                     </p>
                 </div>
 
@@ -356,7 +359,7 @@
                                 </p>
 
                                 <p>
-                                    One benefit of using a Kinect is that the depth values in the depth map follow a mixture of two Gaussians (one for the object, one for the background). This allows the same Gaussian Mixture Model algorithm to detect any object that may lie on the table, regardless of shape or size. Additionally, object can be mostly out of fram, but as long as a part of the object is sensed, the location of the object can be determined and the arm can be positioned to get a better sensing of the object.
+                                    One benefit of using a Kinect is that the depth values in the depth map follow a mixture of two Gaussians (one for the object, one for the background). This allows the same Gaussian Mixture Model algorithm to detect any object that may lie on the table, regardless of shape or size. Additionally, object can be mostly out of frame, but as long as a part of the object is sensed, the location of the object can be determined and the arm can be positioned to get a better sensing of the object.
                                 </p>
 
                                 <p>
@@ -691,7 +694,7 @@
                         </div>
                         <div class="row">
                             <!--TODO-->
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                                 <img src="img/cuff_render_bottom.png" alt="3D printed cuff, bottom view" height="300px" width="300px">
 
                                 <p style="min-height: 24px"></p>
@@ -811,7 +814,7 @@
                                      $$\max \limits_{\phi_o, \phi_b, \mu_o, \mu_b, \sigma_o, \sigma_b} \prod_{i,j} p(v_{ij}) \; : $$
                                      $$p = \phi_o \mathcal{N}(\mu_o, \sigma_o) + \phi_b \mathcal{N}(\mu_b, \sigma_b)$$
                                      $$\phi_o + \phi_b = 1, \; \phi_o \geq 0 , \; \phi_b \geq 0$$
-                                    This problem can be solved within very few iterations of Expectation Maximization implemented in Scikit Learn (we found 10 iterations to be consistent). Also, while our assupmtions of the the depth values being i.i.d. worked in practice, it is a strong assumption, and future work may explore using conditional probabilities or connectivity for classification.
+                                    This problem can be solved within very few iterations of Expectation Maximization implemented in Scikit Learn (we found 10 iterations to be consistent). Also, while our assupmtions of the depth values being i.i.d. worked in practice, it is a strong assumption, and future work may explore using conditional probabilities or connectivity for classification.
                                 </p>
 
                             </div>
@@ -1055,7 +1058,7 @@
                             <!--TODO-->
                             <div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Arsh Picture</div>
                             <div class="col-sm-6">
-                                <p>Arsh Bio </p>
+                                <p> </p>
                                 <p>Arsh Contributions </p>
                             </div>
                         </div>
