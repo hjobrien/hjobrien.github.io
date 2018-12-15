@@ -48,7 +48,7 @@
                 <ul class='nav_links'>
                     <!--<li><div class="col-sm-10"></div></li>-->
                     <li>
-                        <a href="#main-info" class="info-button">
+                        <a href="#Title" class="info-button">
                             <!--<div class="col-sm-1">-->
                             <!--TODO-->
                             <div class="info-box">
@@ -117,7 +117,31 @@
                         </a>
                     </li>
 
-                    
+                    <li>
+                        <a href="#Team" target="_top" class="info-button">
+                            <!--<div class="col-sm-1">-->
+                            <!--TODO-->
+                            <div class="info-box">
+                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Team
+                            </div>
+                            <!--</div>-->
+                            <!--TODO: add more of these links-->
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#Appendix" target="_top" class="info-button">
+                            <!--<div class="col-sm-1">-->
+                            <!--TODO-->
+                            <div class="info-box">
+                                <i class="fas fa-caret-down" aria-hidden="true"></i>  Appendix
+                            </div>
+                            <!--</div>-->
+                            <!--TODO: add more of these links-->
+                        </a>
+                    </li>
+
+
 
                     <!--This is padding-->
                     <li><div style="width: 10px"></div></li>
@@ -131,17 +155,20 @@
 
             <div class="container" id="toggle">
                 <div class="row">
-                    <h1 class="TitleName" style="margin-bottom: 1em">Generalized Grasping with Sawyer</h1>
+                    <h1 id="Title", class="TitleName" style="margin-bottom: 1em">Generalized Grasping with Sawyer</h1>
                 </div>
                 <div id="Introduction" class="row main-info subtitle">
                     <h2>Introduction</h2>
                 </div>
                 <div id='overview' class="row main-info">
                     <p>
-                        The 
+                        Grasping objects is one the central challenges of robobtics, finding applications in nearly usage of robotics from industry to medicine. It is an active area of research, and considered an exceptionally difficult task in the field of Reinforcement Learning.
                     </p>
                     <p>
-                        In multiple paragraphs
+                        The application and reputation of grasping inspired us to form our own approach to the problem. The goal of our project was to design our own algorithm to detect, localize, and grasp general objects in a controlled environment. Through our design choices, we sought to maximize the set of objects we could grasp. To do this, we tackled problems of detecting general objects independent of shape and size, determining grasping angles, and controlling the end-affector to always grab the object without collisions. This led to an original implementation designed and implemented independently of similar research.
+                    </p>
+                    <p>
+                        This project can be applied to any application requiring grasping of objects that cannot be determined beforehand. For example, it can be used for robot arms in industrial plants that need to move over several different objects, in emergency situations where rubble can take on any shape, or in medicine where there are hundreds of different tools. 
                     </p>
                 </div>
 
@@ -166,7 +193,7 @@
 
                                 <p>
                                     We wanted to balance the flexibility of our approach with its difficulty. This motivated
-                                    our choice to use a Kinect sensor for primary data input vs something more flexible, like a camera.
+                                    our choice to use a Kinect sensor for primary data input vs something more flexible, like a camera. Using a Kinect allows for detection and localization of general objects (described in detail in the Image Pipeline).
                                 </p>
 
                                 <p>
@@ -255,15 +282,18 @@
                                 We ended up choosing the parallel gripper, but put extra effort into designing our
                                     image processing algorithm and controller in order to still grasp a wide range of objects.
                                     As you can see in our results section, we are very happy that this decision was in hindsight
-                                    a good one, as we were still able to pick up spheres and other complicated objects,
+                                    a good one, as we were still able to pick up spheres, beanies, and other complicated objects,
                                     which were exactly where we thought the parallel gripper would struggle. This decision
                                     also was a favorable one on the cost front, the Takktile gripper is many thousands
                                     of dollars, which is much more than the parallel gripper
                                 </p>
 
-                                <p style="font-weight: bold;">
-                                ########Discussion of what decisions we made with the image pipeline and how that affected what
-                                    objects we could grasp, one of which should be the simulated annealing vs grid search
+                                <p>
+                                    There were several decisions to be made with the image pipeline as well. One of our goals was to avoid using AR Tags and instead detect and localize objects using raw sensor data. This led us to decide between using a camera or the Kinect. When making this decision, we also had to factor in the prospect of detecting any possible object. For this reason, we opted for the Kinect as the sensor data followed a bimodal distribution that lended itself well to detecting, segmenting, and localizing and reasonable object of interest.
+                                </p>
+
+                                <p>
+                                    One of our large decisions was the assumptions of objects we use. Our goal was to maximize the number of objects we could pick up using a parallel gripper, while also maintaining a feasible scope. Thus, we made two assumptions. The first is that the objects of interest have a uniform density. This allows us to estimate the center of mass. Additionally, when deciding the angle to grasp at, we assume objects are simply connected, meaning our grasps wil always grip from two outer points of the object. The implications of these assumptions are detailed in the Image Pipeline section; however, we found that these assumptions did not limit our algorithm's ability to grasp reasonable objects. As an additional note, our algorithm requires optimizing on non-convex, and even non-continuous, functions. We tried simulated annealing and grid search, but due to both deprecations is simulated annealing libraries and the effectiveness of grid search, we opted for the latter. 
                                 </p>
 
                                 <p>
@@ -352,12 +382,16 @@
                                     to perform successful grasping and the latter is very prone to calibration issues and fine tuning.
                                 </p>
 
-                                <p style="font-weight: bold">
-                                ######comment on how our pipeline is robust, with a reference to later sections for specific notes on robustness>
+                                <p>
+                                    One benefit of using a Kinect is that the depth values in the depth map follow a mixture of two Gaussians (one for the object, one for the background). This allows the same Gaussian Mixture Model algorithm to detect any object that may lie on the table, regardless of shape or size. Additionally, object can be mostly out of frame, but as long as a part of the object is sensed, the location of the object can be determined and the arm can be positioned to get a better sensing of the object.
                                 </p>
 
-                                <p style="font-weight: bold">
-                                    ######comment on how we zeroed the arm when we couldn’t see stuff and also on start as a way of increasing robustness>
+                                <p>
+                                    Additionally, we designed an optimization problem to determine at which angle to grasp. This optimization problem doesn't require anything other than a segmentation of the object. Because of this generality, we were able to find reasonable angles to grasp nearly any object that followed our assumptions. 
+                                </p>
+
+                                <p >
+                                    Using a Kinect had a few drawbacks. Any objects that were too close could not be detected, and additionally the field of view is rather limited. If our detection algorithm could not find any object with reasonable certainty, we moved our arm back to a 'zero' position we determined before hand, allowing it to rescan the surface from the center of the table. This made the algorithm able to correct for any mistakes it made without creating unpredictable behavior.
                                 </p>
 
                                 <p>
@@ -684,7 +718,7 @@
                         </div>
                         <div class="row">
                             <!--TODO-->
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                                 <img src="img/cuff_render_bottom.png" alt="3D printed cuff, bottom view" height="300px" width="300px">
 
                                 <p style="min-height: 24px"></p>
@@ -725,6 +759,185 @@
                     </div>
                 </div>
 
+                <div id="image-pipeline" class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Image Pipeline</h3></div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <!-- <div class="col-sm-6">
+                                <figure class="stack stack-leaflet active">
+                                    <div class="pipeline_box" id="image_3">
+                                        <img src="img/angle.png" alt="Stella Logo">
+                                    </div>
+                                    <div class="pipeline_box" id="image_2">
+                                        <img src="img/center.png" alt="Stella Logo">
+                                    </div>
+                                    <div class="pipeline_box" id="image_1">
+                                        <img src="img/depth_histogram.png" alt="Stella Logo">
+                                        <img src="img/low_pass.png" alt="Stella Logo" style="padding-right: 9px">
+                                    </div>
+                                    <div class="pipeline_box" id="image_0">
+                                        <img src="img/error_correction.png" alt="Stella Logo">
+                                    </div>
+                                </figure>
+                                    <button class='general_btn' id="next_image_btn">Next Image</button>
+                                    <button class='general_btn' id="back_to_first_image" style="visibility: hidden">Back to First Image</button>
+                            </div> -->
+                            <!--<div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Images look like this</div>-->
+
+                            <div class="col-sm-5">
+                                <br>
+                                <center>
+                                    <img src="img/error_correction.png" alt="Depth Map" style="height:200px;">
+                                </center>
+                                <p>
+                                 (1): Depth map of a box on a table. Solid green areas correspond to errored values.
+                                </p>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <p>
+                                    <b>Kinect Depth Map and Error Correction:</b>
+                                </p>
+                                <p>
+                                    At the start of the loop, we collect a depth map of the area of interest from the Kinect using the Freenect library. The sensor from the kinect is less than perfect. In addition to noise, the Kinect sets the value of pixel's it can't accurately detect depth for to 2048. The values that we care about are generally within the range of 350 and 700. We ignore any values that are clipped to 2048 for classification purposes, and treat these values as part of the background.
+                                </p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                        
+                            <div class="col-sm-5">
+                                <br>
+                                <center>
+                                    <img src="img/depth_histogram.png" alt="Depth Histogram" style="height:200px;">
+                                    <img src="img/gmm.png" alt="Depth Histogram" style="height:200px;">
+                                </center>
+                                <p>
+                                (1): The histogram of depth values observed.
+                                </p>
+                                <p>
+                                (2): Histogram of 2000 samples from the estimated mixture.
+                                </p>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <p>
+                                    <b>Gaussian Mixture Model:</b>
+                                </p>
+                                <p>
+                                    The depth values within the image typically follow a bimodal distribution; a smaller mode for the depth of the object and a larger mode for the depth of the background. This distribution is typically roughly Gaussian, thus we can calssify each pixel using a Guassian Mixture Model to create an image segmentation of object versus background.
+                                </p>
+                                <p>
+                                    We assume the distribution of depth values for the object are i.i.d. and follow the mixture of two Gaussians, where one Gaussian corresponds to the object and the other to the background. Let \(v_{ij}\) be the observed value at \((i,j)\), we then maximize our likelihood over possible mixtures of two Gaussians.
+                                     $$\max \limits_{\phi_o, \phi_b, \mu_o, \mu_b, \sigma_o, \sigma_b} \prod_{i,j} p(v_{ij}) \; : $$
+                                     $$p = \phi_o \mathcal{N}(\mu_o, \sigma_o) + \phi_b \mathcal{N}(\mu_b, \sigma_b)$$
+                                     $$\phi_o + \phi_b = 1, \; \phi_o \geq 0 , \; \phi_b \geq 0$$
+                                    This problem can be solved within very few iterations of Expectation Maximization implemented in Scikit Learn (we found 10 iterations to be consistent). Also, while our assupmtions of the depth values being i.i.d. worked in practice, it is a strong assumption, and future work may explore using conditional probabilities or connectivity for classification.
+                                </p>
+
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                        
+                            <div class="col-sm-5">
+                                <br>
+                                <center>
+                                    <img src="img/low_pass.png" alt="Low Pass" style="height:200px;">
+                                    <img src="img/center.png" alt="Center of Mass" style="height:200px;">
+                                </center>
+                                <p>
+                                    (1): Low pass of the depth map.
+                                </p>
+                                <p>
+                                    (2): Resulting segmentation (green is object, purple is background) and center of mass (yellow).
+                                </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>
+                                    <b>Segmentation and Center of Mass:</b>
+                                </p>
+                                <p>
+                                    Once we converge to a viable mixture, we can use it for classification. First, we low pass the image to remove high frequency noise and soften the edges. We found this led to cleaner segmentations than classifying on the original image. To low pass the image, we used a Gaussian Blur from OpenCV. We then use our converged mixture model to classify each pixel independently.
+                                </p>
+                                <p>
+                                    Let \(\phi_o^*, \phi_b^*, \mu_o^*, \mu_b^*, \sigma_o^*, \sigma_b^*\) be the optimal parameters to the mixture optimization problem. Our object's depth values should be smaller than the depth values of the background, so without loss of generality let \(\mu_o^* \leq \mu_b^*\). Defining \(p_o = \mathcal{N}(\mu_o^*, \sigma_o^*)\) and \(p_b = \mathcal{N}(\mu_b^*, \sigma_b^*)\), we clasify a pixel value \(v_{ij}\) using the function
+                                    $$f(v_{ij}) = \begin{cases} 1 \; \; \; \; \; \; \; \phi_o^* p_o(v_{ij}) \geq \phi_b^* p_b(v_{ij}) \\
+                                                                0 \; \; \; \; \; \; \; \phi_o^* p_o(v_{ij}) < \phi_b^* p_b(v_{ij})\end{cases}$$
+                                    To find the center of mass of the object, we first assume the object has uniform density. Letting the normalization of the segmentation be a joint probability distribution over the indices, the center of mass is then the expected index.
+                                    $$\begin{bmatrix} c_x \\ c_y \end{bmatrix} = \frac{1}{\sum_{i,j} f(v_{ij})}\sum_{i,j} f(v_{ij}) \begin{bmatrix} i \\ j \end{bmatrix}$$
+                                </p>
+
+                                <p>
+                                    If the object is predicted to be strangely large or small, the observation is ignored and no action is performed. Otherwise, this center of mass is passed to the controller to move the end-affector of the Sawyer (more details below).
+                                </p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                        
+                            <div class="col-sm-5">
+                                <br>
+                                <center>
+                                    <img src="img/toy_angle.png" alt="Angle" style="width:250px;">
+                                    <img src="img/toy_theta_plot.png" alt="Angle" style="width:250px;">
+                                    <img src="img/angle.png" alt="Angle" style="height:200px;">
+                                    <img src="img/theta_plot.png" alt="Angle" style="width:250px;">
+                                </center>
+                                <p>
+                                    (1): Synthetic dumbell (green) with the angle our algorithm would grasp at.
+                                </p>
+                                <p>
+                                    (2): Plot of the objective function w.r.t. theta. Optimum is achieved at \(\theta = \pm \frac{\pi}{2}\).
+                                </p>
+                                <p>
+                                    (3): Real box (green) with grasp angle (yellow).
+                                </p>
+                                <p>
+                                    (4): Plot of the objective function w.r.t. theta. Optimum is achieved at \(\theta \approx \frac{\pi}{25}\).
+                                </p>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <p>
+                                    <b>Grasp Angle:</b>
+                                </p>
+                                <p>
+                                    Because our gripper was the two-prong gripper, adapting to specific objects mainly required determining at which angle to grasp the object.
+                                </p>
+                                <p> 
+                                    First we continue to assume the object has uniform density. We make an additional assumption that the object is simply connected. We then center the grasp above the detected center of mass, as this would balance the mass on either side of the gripper.
+                                </p>
+                                <p>
+                                    Before lowering the end-affector, we determine an angle to rotate the gripper by. We approached this problem using a heuristic and approximating a corresponding optimization problem. When picking up objects that are uniform density, a natural approach would be to grab the object around the plane passing through the center of mass that minimizes the cross sectional area. For example, a human picks up a dumbell around the small cylinder connecting the two large pieces, as opposed to across the ends of the two large pieces. We now formalize a way to solve for this heuristic.
+                                </p>
+
+                                <p>
+                                    First, we define the indicator function \(f: \mathbb{R}^2 \rightarrow {0, 1}\) that is centered at the center of mass (center of mass corresponds to \((0,0)\)) where \(f(x,y) = 1\) if the object occupies \((x,y)\) and \(f(x,y)=0\) otherwise.
+                                </p>
+
+                                <p>
+                                    A line passing through the origin at angle \(\theta\) is then defined as
+                                    $$\mathcal{L(\theta)} = \left \{ (t \cos \theta , t \sin \theta)  \; | \; t \in \mathbb{R} \right \}$$
+                                    Our goal is to find a line passing through the origin that minimizes the intersection of the line and the object. Thus, our optimization problem is
+                                    $$\theta^* = \argmin \limits_{\theta \in \left [\frac{-\pi}{2}, \frac{\pi}{2} \right]} \int_{-\infty}^{\infty} f(t \cos \theta, t \sin \theta) \text{d}t$$
+                                    The objective function is \(\pi\)-periodic, allowing us to restrict the domain. In general, the objective function is not convex on \(\theta\). However, for reasonable applications, grid search is effective at finding a close to optimal solution. Additionally, if the object is a convex set, the objective function is Lipschitz-continuous on \(\theta\) allowing for a theoretical guarantee of obtaining the optimal solution using bisection method. Using Scypy's integration capabilities, this integeral can be computed rather quickly.
+                                </p>
+                                <p>
+                                    After having found an angle to grasp at, the end-affector is rotated by that angle and then lowered to the object. For objects that aren't simply connected (such as a donut), this algorithm might have a harder time as it would attempt to grasp around the entire object as opposed to using the holes in the object to its advantage. This is an area we hope to explore more in the future.
+                                </p>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
 
                 <div id="Results" class="row main-info subtitle">
                     <h2>Results</h2>
@@ -837,8 +1050,9 @@
 
 
                 <div id="Team" class="row main-info subtitle">
-                    <h2>Team</h2>
+                    <h2>About Us</h2>
                 </div>
+
                 <div id="Hank" class="animation-element slide-right">
                     <div class="project-info">
                         <div class="row">
@@ -848,11 +1062,23 @@
                             </div>
                         </div>
                         <div class="row">
-                            <!--TODO-->
-                            <div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Hank Picture</div>
-                            <div class="col-sm-6">
-                                <p>Hank Bio </p>
-                                <p>Hank Contributions </p>
+                            <div class="col-sm-5"><img src="img/HankFace.jpeg" alt="Hank's Face", height="300px" width="300px"></div>
+                            <div class="col-sm-7">
+                                <h3>About</h3>
+                                <p>
+                                    I'm a third year EECS major who's interested in distributed systems, machine learning, and image processing.
+                                    I was born in Seattle, and recently have picked up an interest in hiking during my free time.
+                                    Over the summer, I'm also a big fan of swimming. I'm a bit of a foodie (but it has to be vegetarian
+                                    or seafood, I'm a pescatarian), and a fun fact about me is that I own a Sous Vide machine,
+                                    though I haven't gotten much of a chance to use it during the semester.
+                                </p>
+
+                                <h3>Contributions</h3>
+                                <p> I measured, designed, and 3D printed the parts for the Kinect interface.
+                                    This website borrows heavily from the styling and general formatting from my personal website,
+                                which we used for this project because we weren't huge fans of the default templates.
+                                    I also wrote the code we used to interface with MoveIt, and contributed
+                                to a variety of small miscellaneous things as they came up.</p>
                             </div>
                         </div>
                     </div>
@@ -870,7 +1096,7 @@
                             <!--TODO-->
                             <div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Arsh Picture</div>
                             <div class="col-sm-6">
-                                <p>Arsh Bio </p>
+                                <p> </p>
                                 <p>Arsh Contributions </p>
                             </div>
                         </div>
@@ -896,6 +1122,35 @@
                     </div>
                 </div>
 
+                <div id="Appendix" class="row main-info subtitle">
+                    <h2>Additional Content</h2>
+
+                    <h3>CAD Models: (all .step)</h3>
+                        <ul>
+                            <li>Full Interface Model</li>
+                            <li>Kinect Clip</li>
+                            <li>Arm Cuff</li>
+                            <li>Old Interface plate (for Takktile Gripper)</li>
+
+                        </ul>
+
+                    <h3>Our Code:</h3>
+                    <ul>
+                        <li>The primary deliverable (kinematics, pipeline, controller, etc)</li>
+                        <li>This Website</li>
+                    </ul>
+
+                    <h3>Other Videos</h3>
+                    <ul>
+                        <li style="font-weight: bolder"> Do we have any other videos?</li>
+                    </ul>
+
+                    <h3>Miscellaneous</h3>
+                    <ul>
+                        <li>Our presentation</li>
+                    </ul>
+
+                </div>
                 <br>
             </div>
 

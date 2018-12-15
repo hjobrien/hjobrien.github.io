@@ -40,6 +40,6 @@ function reset_images(){
     document.getElementById("back_to_first_image").style.visibility = 'hidden';
 }
 
-document.getElementById("next_image_btn").addEventListener('click', advance_image, false);
-document.getElementById("back_to_first_image").addEventListener('click', reset_images, false);
+// document.getElementById("next_image_btn").addEventListener('click', advance_image, false);
+// document.getElementById("back_to_first_image").addEventListener('click', reset_images, false);
 
