@@ -136,7 +136,7 @@
                 <div id="Introduction" class="row main-info subtitle">
                     <h2>Introduction</h2>
                 </div>
-                <div id='main-info' class="row main-info">
+                <div id='overview' class="row main-info">
                     <p>
                         
                     </p>
@@ -148,294 +148,581 @@
                 <div id="Design" class="row main-info subtitle">
                     <h2> Design</h2>
                 </div>
-                <div id="motivation" class="animation-element slide-right">
+
+                <div id="Criteria" class="animation-element slide-right">
                     <div class="project-info">
-                        <div class="row">
-                            <!--TODO-->
-                            <div class="col-sm-6"><h3>Motivation</h3></div>
-                            <div class="col-sm-6">
-                            </div>
+                        <div class="col-sm-6">
+                            <h3>Criteria</h3>
                         </div>
+                        <div class="col-sm-6"></div>
                         <div class="row">
-                            <!--TODO-->
-                            <div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Images look like this</div>
-                            <div class="col-sm-6"><p>Why does anything matter anyway
+                            <div class="col-sm-12">
+                                <!--<img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Images look like this</div>-->
+                                <p>
+                                    When we set out, our goal was to grasp objects with as few restrictions as possible.
+                                    This meant that maximizing the size of the set of graspable objects was a top priority
+                                    in evaluating a particular design choice.
+                                </p>
+
+                                <p>
+                                    We wanted to balance the flexibility of our approach with its difficulty. This motivated
+                                    our choice to use a Kinect sensor for primary data input vs something more flexible, like a camera.
+                                </p>
+
+                                <p>
+                                    From the beginning, we knew we wanted to mount the Kinect looking down over the table from above.
+                                    this motivated our entire hardware design, and our rationale for that choice is listed below.
+                                </p>
+
+
+                                <p>
+                                    Lastly, we wanted to make our attachment easy to attach and detach, as we would have
+                                    to do this each time we went to the lab and wanted to avoid wasting as much time as possible.
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
-                <div id="Hardware" class="animation-element slide-right">   
+                <div id="Description" class="animation-element slide-right">
                     <div class="project-info">
+                        <div class="col-sm-6">
+                            <h3>Details</h3>
+                        </div>
+                        <div class="col-sm-6"></div>
                         <div class="row">
-                            <!--TODO-->
-                            <div class="col-sm-6"><h3>Hardware</h3></div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
+                                <p>
+                                Our overall design featured a 3D-printed cuff which we attached to Sawyer’s wrist. On this,
+                                    we mounted a Kinect sensor, pointing downwards. we then installed an electric parallel gripper
+                                    with the shorter gripper components onto the sawyer.
+                                </p>
+
+                                <p>
+                                    Our software can be split up into two primary components, data processing and actuation.
+                                    For the data processing, we created a custom image pipeline (described in detail in the
+                                    implementation section) to find the optimal grip location and gripper angle for each object
+                                    placed on the table. We then moved the arm to a predefined ‘zero’ location, scanned the table,
+                                    and dispatched control the the execution portion of our code.
+                                </p>
+
+                                <p>
+                                The execution component is primarily our motion controller. This is a relatively simple proportional
+                                    controller, however we found this to be very successful in practice so we did not want to add excess
+                                    complexity here. This controller produced a desired location (in world coordinates) based on the output
+                                    of our data processing, and then we used moveit IK to create a motion plan to that location.
+                                    We constrained motion to prevent the end effector from hitting the table or object, and we
+                                    found this did not significantly effect the success rate of the motion planner. After we moved,
+                                    we would scan the table again. If for some reason, we did not see the object, we would return
+                                    to our zero location to reset. If we were suitably close to the ideal grip location, we would
+                                    rotate the gripper and attempt the grip. Otherwise, control would be given back to the data processing phase.
+                                </p>
+
+                                <p>
+                                    Once we had decided to grip an object, we would rotate the gripper to the optimal
+                                    grip angle (given from our data processing), then move the gripper down around 70%
+                                    of the total z-height in an unconstrained manner. We then constrained the orientation
+                                    of the gripper to be vertical and descended the remaining amount. we found that splitting
+                                    up the descent in this way dramatically increased the success rate of that motion plan.
+                                </p>
+
+                                <p>
+                                    Once we had descended, we closed the gripper and returned to the zero location, hopefully having grasped the object.
+                                </p>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div id="Choices" class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="col-sm-6">
+                            <h3>Decisions</h3>
+                        </div>
+                        <div class="col-sm-6"></div>
                         <div class="row">
-                            <!--TODO-->
-                            <div class="col-sm-6">
-                                <img src="img/cuff_render_top.png" alt="3D printed cuff, top view" height="300px" width="300px">
-                                <img src="img/cuff_render_bottom.png" alt="3D printed cuff, bottom view" height="300px" width="300px">
-                            </div>
-                            <div class="col-sm-6">
-                                <p>We knew that we wanted to use the kinect sensor to scan the table as our primary
-                                    method of sensing. Our team has some experience with 3D modeling and 3D printing,
-                                    so we quickly settled on 3D printing a kinect mount to sit on the metal interface plate below
-                                    the sawyer's zero-g cuff.
+                            <div class="col-sm-12">
+                                <p>
+                                Our most important decision came early in the project, and it was also the one with the
+                                    most tradeoffs. We struggled to onboard with the Reflex Takktile Gripper, and had to decide
+                                    if we wanted to keep pushing and try to work with it, or if we wanted to switch to the
+                                    electric parallel gripper. When considering this decision with our design criteria,
+                                    we were particularly concerned about the loss of degrees of freedom in the gripper
+                                    if we switched to the parallel gripper and how that would impact the set of objects we could grasp.
+                                </p>
 
-                                    After some discussion with the TAs we found out that the most common technique
-                                    for acquiring kinect input was to mount it on a fixed tripod, find the transform between
-                                    the kinect sensor and the table, and obtain our data from that. We elected not to pursue
-                                    this approach ourselves for two reasons:
+                                <p>
+                                We ended up choosing the parallel gripper, but put extra effort into designing our
+                                    image processing algorithm and controller in order to still grasp a wide range of objects.
+                                    As you can see in our results section, we are very happy that this decision was in hindsight
+                                    a good one, as we were still able to pick up spheres and other complicated objects,
+                                    which were exactly where we thought the parallel gripper would struggle. This decision
+                                    also was a favorable one on the cost front, the Takktile gripper is many thousands
+                                    of dollars, which is much more than the parallel gripper
+                                </p>
 
-                                    <ul>
-                                        <li>The tripod approach is very sensitive and prone to setup details and tuning
-                                            <ul>
-                                                <li>One of our goals with this project was to be robust to variations in the environment,
+                                <p style="font-weight: bold;">
+                                ########Discussion of what decisions we made with the image pipeline and how that affected what
+                                    objects we could grasp, one of which should be the simulated annealing vs grid search
+                                </p>
+
+                                <p>
+                                From the outset, we envisioned scanning the table once, moving to the optimal grip location,
+                                    and gripping. As we began work on the project, we realized this was infeasible and
+                                    we were not able to accurately move to the grip target in one motion. Our next approach
+                                    was to use a proportional controller, which would refine the arm’s position iteratively
+                                    at the cost of scanning the table multiple times per grasp, a somewhat slow process.
+                                    We found this approach to be very successful, particularly in how it permitted us to
+                                    move the objects after the arm scanned the table (a form of robustness). After we got
+                                    this working, we carefully monitored execution to watch for behavior that would tell
+                                    us we needed to add D or I correction to the controller (for instance, oscillatory behavior).
+                                    We did not see any of this behavior, but this is an area where we could increase robustness and durability in the future.
+                                </p>
+
+                                <p>
+                                    We also had to decide how to get data from our kinect, we had to choose between creating a new end effector interface
+                                    on sawyer, and mounting the kinect on a tripod. We quickly settled on the former for the following reasons
+                                </p>
+
+                                <ul>
+                                    <li>The tripod approach is very sensitive and prone to setup details and tuning
+                                        <ul>
+                                            <li>
+                                                One of our goals with this project was to be robust to variations in the environment,
                                                 specifically with different shaped objects positioned in different parts of the
                                                 grasping region. If we relied on manually setting up the kinect on a tripod somewhere in the room
                                                 before each attempt, not only would we spend a great deal of time making sure it was in exaclty the correct
                                                 position (or tuning programmatic constants), we would also risk us or others in the lab
-                                                bumping the tripod and forcing us to recalibrate frequently</li>
-                                            </ul>
-                                        </li>
-                                        <li> The angle of scans produced from a kinect-mounted tripod is highly suboptimal
-                                            <ul>
-                                                <li>
-                                                    When we were determining where to move the arm to grasp an object and also how to grasp it,
-                                                    we relied heavily on the top-down nature of our scans, they enabled us to see the object from
-                                                    the same perspective our gripper would be seeing it from, and also allowed us
-                                                    to change the angle from which we saw the object as we adjusted the robot arm.
-                                                    This feedback proved especially vital to our final approach, specifically in that it allowed us to use a closed
-                                                    loop controller for arm movement, which dramatically improved our
-                                                    results over earlier attempts.
-                                                </li>
-                                                <li>Furthermore, we would not be able to distinguish gripping patterns for wide classes of objects if we used the tripod approach
+                                                bumping the tripod and forcing us to recalibrate frequently
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li> The angle of scans produced from a kinect-mounted tripod is highly suboptimal
+                                        <ul>
+                                            <li>
+                                                When we were determining where to move the arm to grasp an object and also how to grasp it,
+                                                we relied heavily on the top-down nature of our scans, they enabled us to see the object from
+                                                the same perspective our gripper would be seeing it from, and also allowed us
+                                                to change the angle from which we saw the object as we adjusted the robot arm.
+                                                This feedback proved especially vital to our final approach, specifically in that it allowed us to use a closed
+                                                loop controller for arm movement, which dramatically improved our
+                                                results over earlier attempts.
+                                            </li>
+                                            <li>
+                                                Furthermore, we would not be able to distinguish gripping patterns for wide classes of objects if we used the tripod approach
                                                 In the case of the rectangular box, having the overhead view allowed us to find the short axis of the box
                                                 which was the only direction we were able to grip it in. For more complicated objects like the hat, its irregular
-                                                structure would have been impossible to grasp without an overhead view.</li>
-                                            </ul>
+                                                structure would have been impossible to grasp without an overhead view.
+                                            </li>
+                                        </ul>
 
 
-                                        </li>
+                                    </li>
                                     <li>
                                         With an eye to future work, when the object's top becomes highly textured, such as in the case
                                         of a lego block, it would be useful to incorporate diffent kinect scan angles to improve the resolution and grasp quality of our approach.
                                         However, putting the kinect on the tripod fixes the data angle, and would prevent us from pursing such a modification in the future.
                                     </li>
-                                    </ul>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Analysis" class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="col-sm-6">
+                            <h3>Analysis</h3>
+                        </div>
+                        <div class="col-sm-6"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h5>Robustness:</h5>
+                                <p>
+                                When analyzing our design in the context of robustness, the hardware (with a slight modification to use screws)
+                                    is quite robust. it sits out of the way for the most part, is on the end effector which means the robot
+                                    can reposition the sensor during execution, and the Kinect is mounted in such a way to get an optimal
+                                    view of the object to be grasped.
+                                </p>
+
+                                <p>
+                                    The use of the Kinect itself is also quite robust, in that the sensor records accurate depth readings,
+                                    compared to something like a single or dual camera, where the former requires bleeding-edge research
+                                    to perform successful grasping and the latter is very prone to calibration issues and fine tuning.
+                                </p>
+
+                                <p style="font-weight: bold">
+                                ######comment on how our pipeline is robust, with a reference to later sections for specific notes on robustness>
+                                </p>
+
+                                <p style="font-weight: bold">
+                                    ######comment on how we zeroed the arm when we couldn’t see stuff and also on start as a way of increasing robustness>
+                                </p>
+
+                                <p>
+                                    One particular way in which we could increase robustness is to lock the Kinect side
+                                    to side within its clips better. this would be easily achieved by adding a feature to
+                                    the clips that would capture stand the Kinect is intended to sit on, and was considered
+                                    during our project’s design but was decided against for time reasons.
+                                </p>
+
+                                <p>
+                                    Choosing a better sensor would increase robustness, but was not an option for use given
+                                    the resources available. The Kinect sensor was optimized for tracking people in a living
+                                    room setting, which meant that we had to hold the Kinect relatively far away from the table
+                                    to get data, which somewhat restricted the movement of our arm. Choosing a different depth
+                                    sensor optimized differently would have helped this.
+                                </p>
+
+                                <h5> Durability: </h5>
+                                <p>
+                                    From a durability perspective, our design is relatively durable in that there aren’t
+                                    many moving parts outside of Sawyer. We could increase the infill in the 3d printed components,
+                                    or perhaps switch to metal there to really increase the physical durability, but this would only
+                                    be needed in a much more hostile environment. We also could better constrain our arm’s motion and
+                                    detect and recover better from errors during execution, perhaps by alerting users about a problematic
+                                    environment, but overall our design is relatively durable. One key way in which we would like to
+                                    increase our durability is to create a custom end effector model that would incorporate our
+                                    kinect mount. We found that occasionally our motion plans would have the kinect sensor interfere
+                                    with the sawyer arm, so by adding a new end effector model, we could use Sawyer’s prewritten code to avoid self-interferences.
+                                </p>
+
+                                <h5>Cost: </h5>
+                                <p>
+                                    A final key component in a real-world design analysis is cost. Outside of the Sawyer,
+                                    our approach is extremely cost efficient, especially if a cheaper depth sensor was used.
+                                    The total cost of our 3D printed parts was about $7, and if being made in bulk would be
+                                    even cheeper. Other than the Kinect sensor, no other part of our approach cost anything at all.
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
-                <div id="image-pipeline" class="animation-element slide-right">
-                    <div class="project-info">
-                        <div class="row">
-                            <!--TODO-->
-                            <div class="col-sm-6"><h3>Image Pipeline</h3></div>
-                            <div class="col-sm-6">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!--TODO-->
-                            <!-- <div class="col-sm-6">
-                                <figure class="stack stack-leaflet active">
-                                    <div class="pipeline_box" id="image_3">
-                                        <img src="img/angle.png" alt="Stella Logo">
-                                    </div>
-
-                                    <div class="pipeline_box" id="image_2">
-                                        <img src="img/center.png" alt="Stella Logo">
-                                    </div>
-
-                                    <div class="pipeline_box" id="image_1">
-                                        <img src="img/depth_histogram.png" alt="Stella Logo">
-                                        <img src="img/low_pass.png" alt="Stella Logo" style="padding-right: 9px">
-                                    </div>
-
-                                    <div class="pipeline_box" id="image_0">
-                                        <img src="img/error_correction.png" alt="Stella Logo">
-                                    </div>
-
-                                </figure>
-                                    <button class='general_btn' id="next_image_btn">Next Image</button>
-                                    <button class='general_btn' id="back_to_first_image" style="visibility: hidden">Back to First Image</button>
-                            </div> -->
+                <!--<div id="motivation" class="animation-element slide-right">-->
+                    <!--<div class="project-info">-->
+                        <!--<div class="row">-->
+                            <!--&lt;!&ndash;TODO&ndash;&gt;-->
+                            <!--<div class="col-sm-6"><h3>Motivation</h3></div>-->
+                            <!--<div class="col-sm-6">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="row">-->
+                            <!--&lt;!&ndash;TODO&ndash;&gt;-->
                             <!--<div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Images look like this</div>-->
+                            <!--<div class="col-sm-6"><p>Why does anything matter anyway-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
-                            <div class="col-sm-5">
-                                <br>
-                                <center>
-                                    <img src="img/error_correction.png" alt="Depth Map" style="height:200px;">
-                                </center>
-                                <p>
-                                 (1): Depth map of a box on a table. Solid green areas correspond to errored values.
-                                </p>
-                            </div>
 
-                            <div class="col-sm-6">
-                                <p>
-                                    <b>Kinect Depth Map and Error Correction:</b>
-                                </p>
-                                <p>
-                                    At the start of the loop, we collect a depth map of the area of interest from the Kinect. The sensor from the kinect is less than perfect. In addition to noise, the Kinect sets the value of pixel's it can't accurately detect depth for to 2048. The values that we care about are generally within the range of 350 and 700. We ignore any values that are clipped to 2048 for classification purposes, and treat these values as part of the background.
-                                </p>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                        
-                            <div class="col-sm-5">
-                                <br>
-                                <center>
-                                    <img src="img/depth_histogram.png" alt="Depth Histogram" style="height:200px;">
-                                    <img src="img/gmm.png" alt="Depth Histogram" style="height:200px;">
-                                </center>
-                                <p>
-                                (1): The histogram of depth values observed.
-                                </p>
-                                <p>
-                                (2): Histogram of 2000 samples from the estimated mixture.
-                                </p>
 
-                            </div>
-                            <div class="col-sm-6">
-                                <p>
-                                    <b>Gaussian Mixture Model:</b>
-                                </p>
-                                <p>
-                                    The depth values within the image typically follow a bimodal distribution; a smaller mode for the depth of the object and a larger mode for the depth of the background. This distribution is typically roughly Gaussian, thus we can calssify each pixel using a Guassian Mixture Model to create an image segmentation of object versus background.
-                                </p>
-                                <p>
-                                    We assume the distribution of depth values for the object are i.i.d. and follow the mixture of two Gaussians, where one Gaussian corresponds to the object and the other to the background. Let \(v_{ij}\) be the observed value at \((i,j)\), we then maximize our likelihood over possible mixtures of two Gaussians.
-                                     $$\max \limits_{\phi_o, \phi_b, \mu_o, \mu_b, \sigma_o, \sigma_b} \prod_{i,j} p(v_{ij}) \; : $$
-                                     $$p = \phi_o \mathcal{N}(\mu_o, \sigma_o) + \phi_b \mathcal{N}(\mu_b, \sigma_b)$$
-                                     $$\phi_o + \phi_b = 1, \; \phi_o \geq 0 , \; \phi_b \geq 0$$
-                                    This problem can be solved within very few iterations of Expectation Maximization implemented in Scikit Learn (we found 10 iterations to be consistent). Also, while our assupmtions of the the depth values being i.i.d. worked in practice, it is a strong assumption, and future work may explore using conditional probabilities or connectivity for classification.
-                                </p>
+                <!--<div id="Hardware" class="animation-element slide-right">-->
+                    <!--<div class="project-info">-->
+                        <!--<div class="row">-->
+                            <!--&lt;!&ndash;TODO&ndash;&gt;-->
+                            <!--<div class="col-sm-6"><h3>Hardware</h3></div>-->
+                            <!--<div class="col-sm-6">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="row">-->
+                            <!--&lt;!&ndash;TODO&ndash;&gt;-->
+                            <!--<div class="col-sm-6">-->
+                                <!--<img src="img/cuff_render_top.png" alt="3D printed cuff, top view" height="300px" width="300px">-->
+                                <!--<img src="img/cuff_render_bottom.png" alt="3D printed cuff, bottom view" height="300px" width="300px">-->
+                            <!--</div>-->
+                            <!--<div class="col-sm-6">-->
+                                <!--<p>We knew that we wanted to use the kinect sensor to scan the table as our primary-->
+                                    <!--method of sensing. Our team has some experience with 3D modeling and 3D printing,-->
+                                    <!--so we quickly settled on 3D printing a kinect mount to sit on the metal interface plate below-->
+                                    <!--the sawyer's zero-g cuff.-->
 
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                        
-                            <div class="col-sm-5">
-                                <br>
-                                <center>
-                                    <img src="img/low_pass.png" alt="Low Pass" style="height:200px;">
-                                    <img src="img/center.png" alt="Center of Mass" style="height:200px;">
-                                </center>
-                                <p>
-                                    (1): Low pass of the depth map.
-                                </p>
-                                <p>
-                                    (2): Resulting segmentation (green is object, purple is background) and center of mass (yellow).
-                                </p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p>
-                                    <b>Segmentation and Center of Mass:</b>
-                                </p>
-                                <p>
-                                    Once we converge to a viable mixture, we can use it for classification. First, we low pass the image to remove high frequency noise and soften the edges. We found this led to cleaner segmentations than classifying on the original image. We then use our converged mixture model to classify each pixel independently.
-                                </p>
-                                <p>
-                                    Let \(\phi_o^*, \phi_b^*, \mu_o^*, \mu_b^*, \sigma_o^*, \sigma_b^*\) be the optimal parameters to the mixture optimization problem. Our object's depth values should be smaller than the depth values of the background, so without loss of generality let \(\mu_o^* \leq \mu_b^*\). Defining \(p_o = \mathcal{N}(\mu_o^*, \sigma_o^*)\) and \(p_b = \mathcal{N}(\mu_b^*, \sigma_b^*)\), we clasify a pixel value \(v_{ij}\) using the function
-                                    $$f(v_{ij}) = \begin{cases} 1 \; \; \; \; \; \; \; \phi_o^* p_o(v_{ij}) \geq \phi_b^* p_b(v_{ij}) \\
-                                                                0 \; \; \; \; \; \; \; \phi_o^* p_o(v_{ij}) < \phi_b^* p_b(v_{ij})\end{cases}$$
-                                    To find the center of mass of the object, we first assume the object has uniform density. Letting the normalization of the segmentation be a joint probability distribution over the indices, the center of mass is then the expected index.
-                                    $$\begin{bmatrix} c_x \\ c_y \end{bmatrix} = \frac{1}{\sum_{i,j} f(v_{ij})}\sum_{i,j} f(v_{ij}) \begin{bmatrix} i \\ j \end{bmatrix}$$
-                                </p>
+                                    <!--After some discussion with the TAs we found out that the most common technique-->
+                                    <!--for acquiring kinect input was to mount it on a fixed tripod, find the transform between-->
+                                    <!--the kinect sensor and the table, and obtain our data from that. We elected not to pursue-->
+                                    <!--this approach ourselves for three reasons:-->
 
-                                <p>
-                                    If the object is predicted to be strangely large or small, the observation is ignored and no action is performed. Otherwise, this center of mass is passed to the controller to move the end-affector of the Sawyer (more details below).
-                                </p>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                        
-                            <div class="col-sm-5">
-                                <br>
-                                <center>
-                                    <img src="img/toy_angle.png" alt="Angle" style="width:250px;">
-                                    <img src="img/toy_theta_plot.png" alt="Angle" style="width:250px;">
-                                    <img src="img/angle.png" alt="Angle" style="height:200px;">
-                                    <img src="img/theta_plot.png" alt="Angle" style="width:250px;">
-                                </center>
-                                <p>
-                                    (1): Synthetic dumbell (green) with the angle our algorithm would grasp at.
-                                </p>
-                                <p>
-                                    (2): Plot of the objective function w.r.t. theta. Optimum is achieved at \(\theta = \pm \frac{\pi}{2}\).
-                                </p>
-                                <p>
-                                    (3): Real box (green) with grasp angle (yellow).
-                                </p>
-                                <p>
-                                    (4): Plot of the objective function w.r.t. theta. Optimum is achieved at \(\theta \approx \frac{\pi}{25}\).
-                                </p>
-                            </div>
+                                    <!--<ul>-->
+                                        <!--<li>The tripod approach is very sensitive and prone to setup details and tuning-->
+                                            <!--<ul>-->
+                                                <!--<li>One of our goals with this project was to be robust to variations in the environment,-->
+                                                <!--specifically with different shaped objects positioned in different parts of the-->
+                                                <!--grasping region. If we relied on manually setting up the kinect on a tripod somewhere in the room-->
+                                                <!--before each attempt, not only would we spend a great deal of time making sure it was in exaclty the correct-->
+                                                <!--position (or tuning programmatic constants), we would also risk us or others in the lab-->
+                                                <!--bumping the tripod and forcing us to recalibrate frequently</li>-->
+                                            <!--</ul>-->
+                                        <!--</li>-->
+                                        <!--<li> The angle of scans produced from a kinect-mounted tripod is highly suboptimal-->
+                                            <!--<ul>-->
+                                                <!--<li>-->
+                                                    <!--When we were determining where to move the arm to grasp an object and also how to grasp it,-->
+                                                    <!--we relied heavily on the top-down nature of our scans, they enabled us to see the object from-->
+                                                    <!--the same perspective our gripper would be seeing it from, and also allowed us-->
+                                                    <!--to change the angle from which we saw the object as we adjusted the robot arm.-->
+                                                    <!--This feedback proved especially vital to our final approach, specifically in that it allowed us to use a closed-->
+                                                    <!--loop controller for arm movement, which dramatically improved our-->
+                                                    <!--results over earlier attempts.-->
+                                                <!--</li>-->
+                                                <!--<li>Furthermore, we would not be able to distinguish gripping patterns for wide classes of objects if we used the tripod approach-->
+                                                <!--In the case of the rectangular box, having the overhead view allowed us to find the short axis of the box-->
+                                                <!--which was the only direction we were able to grip it in. For more complicated objects like the hat, its irregular-->
+                                                <!--structure would have been impossible to grasp without an overhead view.</li>-->
+                                            <!--</ul>-->
 
-                            <div class="col-sm-6">
-                                <p>
-                                    <b>Grasp Angle:</b>
-                                </p>
-                                <p>
-                                    Because our gripper was the two-prong gripper, adapting to specific objects mainly required determining at which angle to grasp the object.
-                                </p>
-                                <p> 
-                                    First we continue to assume the object has uniform density. We make an additional assumption that the object is simply connected. We then center the grasp above the detected center of mass, as this would balance the mass on either side of the gripper.
-                                </p>
-                                <p>
-                                    Before lowering the end-affector, we determine an angle to rotate the gripper by. We approached this problem using a heuristic and approximating a corresponding optimization problem. When picking up objects that are uniform density, a natural approach would be to grab the object around the plane passing through the center of mass that minimizes the cross sectional area. For example, a human picks up a dumbell around the small cylinder connecting the two large pieces, as opposed to across the ends of the two large pieces. We now formalize a way to solve for this heuristic.
-                                </p>
 
-                                <p>
-                                    First, we define the indicator function \(f: \mathbb{R}^2 \rightarrow {0, 1}\) that is centered at the center of mass (center of mass corresponds to \((0,0)\)) where \(f(x,y) = 1\) if the object occupies \((x,y)\) and \(f(x,y)=0\) otherwise.
-                                </p>
+                                        <!--</li>-->
+                                    <!--<li>-->
+                                        <!--With an eye to future work, when the object's top becomes highly textured, such as in the case-->
+                                        <!--of a lego block, it would be useful to incorporate diffent kinect scan angles to improve the resolution and grasp quality of our approach.-->
+                                        <!--However, putting the kinect on the tripod fixes the data angle, and would prevent us from pursing such a modification in the future.-->
+                                    <!--</li>-->
+                                    <!--</ul>-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
-                                <p>
-                                    A line passing through the origin at angle \(\theta\) is then defined as
-                                    $$\mathcal{L(\theta)} = \left \{ (t \cos \theta , t \sin \theta)  \; | \; t \in \mathbb{R} \right \}$$
-                                    Our goal is to find a line passing through the origin that minimizes the intersection of the line and the object. Thus, our optimization problem is
-                                    $$\theta^* = \argmin \limits_{\theta \in \left [\frac{-\pi}{2}, \frac{\pi}{2} \right]} \int_{-\infty}^{\infty} f(t \cos \theta, t \sin \theta) \text{d}t$$
-                                    The objective function is \(\pi\)-periodic, allowing us to restrict the domain. In general, the objective function is not convex on \(\theta\). However, for reasonable applications, grid search is effective at finding a close to optimal solution. Additionally, if the object is a convex set, the objective function is Lipschitz-continuous on \(\theta\) allowing for a theoretical guarantee of obtaining the optimal solution using bisection method.
-                                </p>
-                                <p>
-                                    After having found an angle to grasp at, the end-affector is rotated by that angle and then lowered to the object. For objects that aren't simply connected (such as a donut), this algorithm might have a harder time as it would attempt to grasp around the entire object as opposed to using the holes in the object to its advantage. This is an area we hope to explore more in the future.
-                                </p>
-                            </div>
-                        </div>
 
-                    </div>
-                </div>
+                <!--<div id="image-pipeline" class="animation-element slide-right">-->
+                    <!--<div class="project-info">-->
+                        <!--<div class="row">-->
+                            <!--&lt;!&ndash;TODO&ndash;&gt;-->
+                            <!--<div class="col-sm-6"><h3>Image Pipeline</h3></div>-->
+                            <!--<div class="col-sm-6">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="row">-->
+                            <!--&lt;!&ndash;TODO&ndash;&gt;-->
+                            <!--&lt;!&ndash; <div class="col-sm-6">-->
+                                <!--<figure class="stack stack-leaflet active">-->
+                                    <!--<div class="pipeline_box" id="image_3">-->
+                                        <!--<img src="img/angle.png" alt="Stella Logo">-->
+                                    <!--</div>-->
 
-                <div id="controller" class="animation-element slide-right">
-                    <div class="project-info">
-                        <div class="row">
-                            <!--TODO-->
-                            <div class="col-sm-6"><h3>Controller</h3></div>
-                            <div class="col-sm-6">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!--TODO-->
-                            <div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Images look like this</div>
-                            <div class="col-sm-6"><p>Talk about why our proportional controller doesn't suck and why its not boring here
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                    <!--<div class="pipeline_box" id="image_2">-->
+                                        <!--<img src="img/center.png" alt="Stella Logo">-->
+                                    <!--</div>-->
 
+                                    <!--<div class="pipeline_box" id="image_1">-->
+                                        <!--<img src="img/depth_histogram.png" alt="Stella Logo">-->
+                                        <!--<img src="img/low_pass.png" alt="Stella Logo" style="padding-right: 9px">-->
+                                    <!--</div>-->
+
+                                    <!--<div class="pipeline_box" id="image_0">-->
+                                        <!--<img src="img/error_correction.png" alt="Stella Logo">-->
+                                    <!--</div>-->
+
+                                <!--</figure>-->
+                                    <!--<button class='general_btn' id="next_image_btn">Next Image</button>-->
+                                    <!--<button class='general_btn' id="back_to_first_image" style="visibility: hidden">Back to First Image</button>-->
+                            <!--</div> &ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Images look like this</div>&ndash;&gt;-->
+
+                            <!--<div class="col-sm-5">-->
+                                <!--<br>-->
+                                <!--<center>-->
+                                    <!--<img src="img/error_correction.png" alt="Depth Map" style="height:200px;">-->
+                                <!--</center>-->
+                                <!--<p>-->
+                                 <!--(1): Depth map of a box on a table. Solid green areas correspond to errored values.-->
+                                <!--</p>-->
+                            <!--</div>-->
+
+                            <!--<div class="col-sm-6">-->
+                                <!--<p>-->
+                                    <!--<b>Kinect Depth Map and Error Correction:</b>-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--At the start of the loop, we collect a depth map of the area of interest from the Kinect. The sensor from the kinect is less than perfect. In addition to noise, the Kinect sets the value of pixel's it can't accurately detect depth for to 2048. The values that we care about are generally within the range of 350 and 700. We ignore any values that are clipped to 2048 for classification purposes, and treat these values as part of the background.-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<br>-->
+                        <!--<div class="row">-->
+
+                            <!--<div class="col-sm-5">-->
+                                <!--<br>-->
+                                <!--<center>-->
+                                    <!--<img src="img/depth_histogram.png" alt="Depth Histogram" style="height:200px;">-->
+                                    <!--<img src="img/gmm.png" alt="Depth Histogram" style="height:200px;">-->
+                                <!--</center>-->
+                                <!--<p>-->
+                                <!--(1): The histogram of depth values observed.-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                <!--(2): Histogram of 2000 samples from the estimated mixture.-->
+                                <!--</p>-->
+
+                            <!--</div>-->
+                            <!--<div class="col-sm-6">-->
+                                <!--<p>-->
+                                    <!--<b>Gaussian Mixture Model:</b>-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--The depth values within the image typically follow a bimodal distribution; a smaller mode for the depth of the object and a larger mode for the depth of the background. This distribution is typically roughly Gaussian, thus we can calssify each pixel using a Guassian Mixture Model to create an image segmentation of object versus background.-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--We assume the distribution of depth values for the object are i.i.d. and follow the mixture of two Gaussians, where one Gaussian corresponds to the object and the other to the background. Let \(v_{ij}\) be the observed value at \((i,j)\), we then maximize our likelihood over possible mixtures of two Gaussians.-->
+                                     <!--$$\max \limits_{\phi_o, \phi_b, \mu_o, \mu_b, \sigma_o, \sigma_b} \prod_{i,j} p(v_{ij}) \; : $$-->
+                                     <!--$$p = \phi_o \mathcal{N}(\mu_o, \sigma_o) + \phi_b \mathcal{N}(\mu_b, \sigma_b)$$-->
+                                     <!--$$\phi_o + \phi_b = 1, \; \phi_o \geq 0 , \; \phi_b \geq 0$$-->
+                                    <!--This problem can be solved within very few iterations of Expectation Maximization implemented in Scikit Learn (we found 10 iterations to be consistent). Also, while our assupmtions of the the depth values being i.i.d. worked in practice, it is a strong assumption, and future work may explore using conditional probabilities or connectivity for classification.-->
+                                <!--</p>-->
+
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<br>-->
+                        <!--<div class="row">-->
+
+                            <!--<div class="col-sm-5">-->
+                                <!--<br>-->
+                                <!--<center>-->
+                                    <!--<img src="img/low_pass.png" alt="Low Pass" style="height:200px;">-->
+                                    <!--<img src="img/center.png" alt="Center of Mass" style="height:200px;">-->
+                                <!--</center>-->
+                                <!--<p>-->
+                                    <!--(1): Low pass of the depth map.-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--(2): Resulting segmentation (green is object, purple is background) and center of mass (yellow).-->
+                                <!--</p>-->
+                            <!--</div>-->
+                            <!--<div class="col-sm-6">-->
+                                <!--<p>-->
+                                    <!--<b>Segmentation and Center of Mass:</b>-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--Once we converge to a viable mixture, we can use it for classification. First, we low pass the image to remove high frequency noise and soften the edges. We found this led to cleaner segmentations than classifying on the original image. We then use our converged mixture model to classify each pixel independently.-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--Let \(\phi_o^*, \phi_b^*, \mu_o^*, \mu_b^*, \sigma_o^*, \sigma_b^*\) be the optimal parameters to the mixture optimization problem. Our object's depth values should be smaller than the depth values of the background, so without loss of generality let \(\mu_o^* \leq \mu_b^*\). Defining \(p_o = \mathcal{N}(\mu_o^*, \sigma_o^*)\) and \(p_b = \mathcal{N}(\mu_b^*, \sigma_b^*)\), we clasify a pixel value \(v_{ij}\) using the function-->
+                                    <!--$$f(v_{ij}) = \begin{cases} 1 \; \; \; \; \; \; \; \phi_o^* p_o(v_{ij}) \geq \phi_b^* p_b(v_{ij}) \\-->
+                                                                <!--0 \; \; \; \; \; \; \; \phi_o^* p_o(v_{ij}) < \phi_b^* p_b(v_{ij})\end{cases}$$-->
+                                    <!--To find the center of mass of the object, we first assume the object has uniform density. Letting the normalization of the segmentation be a joint probability distribution over the indices, the center of mass is then the expected index.-->
+                                    <!--$$\begin{bmatrix} c_x \\ c_y \end{bmatrix} = \frac{1}{\sum_{i,j} f(v_{ij})}\sum_{i,j} f(v_{ij}) \begin{bmatrix} i \\ j \end{bmatrix}$$-->
+                                <!--</p>-->
+
+                                <!--<p>-->
+                                    <!--If the object is predicted to be strangely large or small, the observation is ignored and no action is performed. Otherwise, this center of mass is passed to the controller to move the end-affector of the Sawyer (more details below).-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<br>-->
+                        <!--<div class="row">-->
+
+                            <!--<div class="col-sm-5">-->
+                                <!--<br>-->
+                                <!--<center>-->
+                                    <!--<img src="img/toy_angle.png" alt="Angle" style="width:250px;">-->
+                                    <!--<img src="img/toy_theta_plot.png" alt="Angle" style="width:250px;">-->
+                                    <!--<img src="img/angle.png" alt="Angle" style="height:200px;">-->
+                                    <!--<img src="img/theta_plot.png" alt="Angle" style="width:250px;">-->
+                                <!--</center>-->
+                                <!--<p>-->
+                                    <!--(1): Synthetic dumbell (green) with the angle our algorithm would grasp at.-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--(2): Plot of the objective function w.r.t. theta. Optimum is achieved at \(\theta = \pm \frac{\pi}{2}\).-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--(3): Real box (green) with grasp angle (yellow).-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--(4): Plot of the objective function w.r.t. theta. Optimum is achieved at \(\theta \approx \frac{\pi}{25}\).-->
+                                <!--</p>-->
+                            <!--</div>-->
+
+                            <!--<div class="col-sm-6">-->
+                                <!--<p>-->
+                                    <!--<b>Grasp Angle:</b>-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--Because our gripper was the two-prong gripper, adapting to specific objects mainly required determining at which angle to grasp the object.-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--First we continue to assume the object has uniform density. We make an additional assumption that the object is simply connected. We then center the grasp above the detected center of mass, as this would balance the mass on either side of the gripper.-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--Before lowering the end-affector, we determine an angle to rotate the gripper by. We approached this problem using a heuristic and approximating a corresponding optimization problem. When picking up objects that are uniform density, a natural approach would be to grab the object around the plane passing through the center of mass that minimizes the cross sectional area. For example, a human picks up a dumbell around the small cylinder connecting the two large pieces, as opposed to across the ends of the two large pieces. We now formalize a way to solve for this heuristic.-->
+                                <!--</p>-->
+
+                                <!--<p>-->
+                                    <!--First, we define the indicator function \(f: \mathbb{R}^2 \rightarrow {0, 1}\) that is centered at the center of mass (center of mass corresponds to \((0,0)\)) where \(f(x,y) = 1\) if the object occupies \((x,y)\) and \(f(x,y)=0\) otherwise.-->
+                                <!--</p>-->
+
+                                <!--<p>-->
+                                    <!--A line passing through the origin at angle \(\theta\) is then defined as-->
+                                    <!--$$\mathcal{L(\theta)} = \left \{ (t \cos \theta , t \sin \theta)  \; | \; t \in \mathbb{R} \right \}$$-->
+                                    <!--Our goal is to find a line passing through the origin that minimizes the intersection of the line and the object. Thus, our optimization problem is-->
+                                    <!--$$\theta^* = \argmin \limits_{\theta \in \left [\frac{-\pi}{2}, \frac{\pi}{2} \right]} \int_{-\infty}^{\infty} f(t \cos \theta, t \sin \theta) \text{d}t$$-->
+                                    <!--The objective function is \(\pi\)-periodic, allowing us to restrict the domain. In general, the objective function is not convex on \(\theta\). However, for reasonable applications, grid search is effective at finding a close to optimal solution. Additionally, if the object is a convex set, the objective function is Lipschitz-continuous on \(\theta\) allowing for a theoretical guarantee of obtaining the optimal solution using bisection method.-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--After having found an angle to grasp at, the end-affector is rotated by that angle and then lowered to the object. For objects that aren't simply connected (such as a donut), this algorithm might have a harder time as it would attempt to grasp around the entire object as opposed to using the holes in the object to its advantage. This is an area we hope to explore more in the future.-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                    <!--</div>-->
+                <!--</div>-->
+                
                 <div id="Implementation" class="row main-info subtitle">
                     <h2> Implementation</h2>
+                </div>
+
+                <div id="hardware-imp" class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Hardware Implementation</h3></div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6">
+                                <img src="img/cuff_render_bottom.png" alt="3D printed cuff, bottom view" height="300px" width="300px">
+
+                                <p style="min-height: 24px"></p>
+                                <p> There are two primary components to our design, the blue cuff in the center of the image, and the two black clips which retain the kinect sensor itself.
+                                These are bolted onto the blue cuff. All plastic parts were 3D printed, we used both the Cory Supernode and the Moffit Makerspace
+                                </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p> When we were going about designing our Kinect mount, we had two primary designs.
+                                    The first was one that would interface using screws to the Reflex Takktile gripper,
+                                    in much the same way that Nandita's group did in a past semester. However, when it
+                                    became clear that we were going to switch over to the electric parallel gripper,
+                                    we had to design a new interface.</p>
+
+                                <p>We ended up designing the cuff to sit around the metal wrist of Sawyer for a couple reasons.
+                                Firstly, we wanted to make installation and removal of our interface quick and easy, so avoiding more
+                                screws and bolts was appealing. Secondly, because the wire connecting the parallel gripper to Sawyer is very short,
+                                it would be challenging to slip an interface plate between the gripper and the arm, to say nothing of having to get new longer screws
+                                to screw the gripper on that would be long enough to pass through our interface. However, because we were no longer using screws,
+                                we faced the issue of keeping our interface in the same position for each round. We solved this using two techniques.</p>
+
+                                <p>To try to constrain our interface rotationally, we started by simply desnging the part to have close to a friction fit on the arm,
+                                which then let us add tape to the inside of the part, prodiucing a good friction fit. Note the curved plastic arcs coming off the blue
+                                piece in the image, these were used to start the interface in the same position each time we installed the gripper. We would position the blue plastic
+                                piece in such a way around the cuff that one of the arcs would be in contact with the electric parallel gripper. Originally our hope
+                                with these arcs was to snugly fit around the curve in the gripper itself, but that proved too challening to design and the friction-fit approach
+                                worked suitably well that we continued with that.</p>
+
+                                <p>The black kinect clips are designed to snugly fit around the kinect, and are designed a few milimeters too thin
+                                in order to utilize the flexing of the plastic to keep the kinect in position. Experimentally, they kept the kinect from slipping
+                                even when held such that the kinect opening was parallel to the floor </p>
+
+                                <p>As a future extension, it would be good to change this part to one that is screwed onto the robot arm itself to increase repeatability
+                                of our approach. We made that tradeoff primarily for time reasons for this project, but a rigidly attrached end effector would increase reliability
+                                 and its disadvantages would be mitigate by not having to install and uninstall it frequently.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -530,7 +817,7 @@
                 <div id="Conclusion" class="row main-info subtitle">
                     <h2>Conclusion</h2>
                 </div>
-                <div id='main-info' class="row main-info">
+                <div id='conclusion-text' class="row main-info">
                     <p>
                         The 
                     </p>
@@ -538,6 +825,76 @@
                         In multiple paragraphs
                     </p>
                 </div>
+
+
+                <div id="Team" class="row main-info subtitle">
+                    <h2>Conclusion</h2>
+                </div>
+                <div id='team-text' class="row main-info">
+                    <p>
+                        The
+                    </p>
+                    <p>
+                        In multiple paragraphs
+                    </p>
+                </div>
+                <div id="Hank" class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Hank</h3></div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Hank Picture</div>
+                            <div class="col-sm-6">
+                                <p>Hank Bio </p>
+                                <p>Hank Contributions </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Arsh" class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Arsh</h3></div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Arsh Picture</div>
+                            <div class="col-sm-6">
+                                <p>Arsh Bio </p>
+                                <p>Arsh Contributions </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Arjun" class="animation-element slide-right">
+                    <div class="project-info">
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><h3>Arjun</h3></div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--TODO-->
+                            <div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Arjun Picture</div>
+                            <div class="col-sm-6">
+                                <p>Arjun Bio </p>
+                                <p>Arjun Contributions </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <br>
             </div>
 
