@@ -106,7 +106,7 @@
                     </li>
 
                     <li>
-                        <a href="#Conclusion" target="_top" class="info-button">
+                        <a href="#Conclusions" target="_top" class="info-button">
                             <!--<div class="col-sm-1">-->
                             <!--TODO-->
                             <div class="info-box">
@@ -184,7 +184,6 @@
                         <div class="col-sm-6"></div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <!--<img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Images look like this</div>-->
                                 <p>
                                     When we set out, our goal was to grasp objects with as few restrictions as possible.
                                     This meant that maximizing the size of the set of graspable objects was a top priority
@@ -712,7 +711,7 @@
                     <div class="project-info">
                         <div class="row">
                             <!--TODO-->
-                            <div class="col-sm-6"><h3>Hardware Implementation</h3></div>
+                            <div class="col-sm-6"><h3>Hardware</h3></div>
                             <div class="col-sm-6">
                             </div>
                         </div>
@@ -727,32 +726,27 @@
                                 </p>
                             </div>
                             <div class="col-sm-6">
-                                <p> When we were going about designing our Kinect mount, we had two primary designs.
-                                    The first was one that would interface using screws to the Reflex Takktile gripper,
-                                    in much the same way that Nandita's group did in a past semester. However, when it
-                                    became clear that we were going to switch over to the electric parallel gripper,
-                                    we had to design a new interface.</p>
 
-                                <p>We ended up designing the cuff to sit around the metal wrist of Sawyer for a couple reasons.
+                                <p>We choose to design a cuff that sat around the metal wrist of Sawyer for a couple reasons.
                                 Firstly, we wanted to make installation and removal of our interface quick and easy, so avoiding more
                                 screws and bolts was appealing. Secondly, because the wire connecting the parallel gripper to Sawyer is very short,
                                 it would be challenging to slip an interface plate between the gripper and the arm, to say nothing of having to get new longer screws
                                 to screw the gripper on that would be long enough to pass through our interface. However, because we were no longer using screws,
                                 we faced the issue of keeping our interface in the same position for each round. We solved this using two techniques.</p>
 
-                                <p>To try to constrain our interface rotationally, we started by simply desnging the part to have close to a friction fit on the arm,
-                                which then let us add tape to the inside of the part, prodiucing a good friction fit. Note the curved plastic arcs coming off the blue
+                                <p>To try to constrain our interface rotationally, we started by simply designing the part to have close to a friction fit on the arm,
+                                which then let us add tape to the inside of the part, producing a good friction fit. Note the curved plastic arcs coming off the blue
                                 piece in the image, these were used to start the interface in the same position each time we installed the gripper. We would position the blue plastic
                                 piece in such a way around the cuff that one of the arcs would be in contact with the electric parallel gripper. Originally our hope
-                                with these arcs was to snugly fit around the curve in the gripper itself, but that proved too challening to design and the friction-fit approach
+                                was that these arcs would snugly fit around the curve in the gripper, but that proved too challenging to design and the friction-fit approach
                                 worked suitably well that we continued with that.</p>
 
-                                <p>The black Kinect clips are designed to snugly fit around the Kinect, and are designed a few milimeters too thin
+                                <p>The black Kinect clips are designed to tightly fit around the Kinect, and are designed a few millimeters too thin
                                 in order to utilize the flexing of the plastic to keep the Kinect in position. Experimentally, they kept the Kinect from slipping
                                 even when held such that the Kinect opening was parallel to the floor </p>
 
                                 <p>As a future extension, it would be good to change this part to one that is screwed onto the robot arm itself to increase repeatability
-                                of our approach. We made that tradeoff primarily for time reasons for this project, but a rigidly attrached end effector would increase reliability
+                                of our approach. We made that tradeoff primarily for time reasons for this project, but a rigidly attached end effector would increase reliability
                                  and its disadvantages would be mitigate by not having to install and uninstall it frequently.</p>
                             </div>
                         </div>
@@ -768,27 +762,6 @@
                             </div>
                         </div>
                         <div class="row">
-                            <!--TODO-->
-                            <!-- <div class="col-sm-6">
-                                <figure class="stack stack-leaflet active">
-                                    <div class="pipeline_box" id="image_3">
-                                        <img src="img/angle.png" alt="Stella Logo">
-                                    </div>
-                                    <div class="pipeline_box" id="image_2">
-                                        <img src="img/center.png" alt="Stella Logo">
-                                    </div>
-                                    <div class="pipeline_box" id="image_1">
-                                        <img src="img/depth_histogram.png" alt="Stella Logo">
-                                        <img src="img/low_pass.png" alt="Stella Logo" style="padding-right: 9px">
-                                    </div>
-                                    <div class="pipeline_box" id="image_0">
-                                        <img src="img/error_correction.png" alt="Stella Logo">
-                                    </div>
-                                </figure>
-                                    <button class='general_btn' id="next_image_btn">Next Image</button>
-                                    <button class='general_btn' id="back_to_first_image" style="visibility: hidden">Back to First Image</button>
-                            </div> -->
-                            <!--<div class="col-sm-6"><img src="img/stella-logo1.png" alt="Stella Logo" height="150px" width="150px"> Images look like this</div>-->
 
                             <div class="col-sm-5">
                                 <br>
@@ -943,7 +916,7 @@
                     <h2>Results</h2>
                 </div>
 
-                <div id="hardware-imp" class="animation-element slide-right">
+                <div id="final-prod" class="animation-element slide-right">
                     <div class="project-info">
                         <div class="row">
                             <!--TODO-->
@@ -957,7 +930,16 @@
                                 <img src="img/grab-photos.png" alt="photos of our project grabbing different objects" height="220px" width="430px">
                             </div>
                             <div class="col-sm-6">
-                                <p> Putting everything together, our system is able to perform robustly in grasping and lifting a variety of objects. Upon testing on different shapes and positions for objects, we found that our system was able to reliably locate, actuate to the correct position, rotate to the correct orientation, and grasp the object on several iterations. In practice, we saw that regardless of the amount of synthetic (sometimes adversarial) movement/rotation of the object, our system was able to use the designed controller in order to perform its task and find and grasp the object. In order to test the various aspects of our system, and to test the robustness along each axis of our goal, we present scenarious below in which the system is robust to a different category of difficulty, and what it must have done correctly in order to achieve a proper grasp. </p>
+                                <p> Putting everything together, our system is able to perform robustly in grasping and
+                                    lifting a variety of objects. Upon testing on different shapes and positions for objects,
+                                    we found that our system was able to reliably locate, actuate to the correct position,
+                                    rotate to the correct orientation, and grasp the object on several iterations.
+                                    In practice, we saw that regardless of the amount of synthetic (sometimes adversarial)
+                                    movement/rotation of the object, our system was able to use the designed controller
+                                    in order to perform its task and find and grasp the object. In order to test the
+                                    various aspects of our system, and to test the robustness along each axis of our
+                                    goal, we present scenarious below in which the system is robust to a different
+                                    category of difficulty, and what it must have done correctly in order to achieve a proper grasp. </p>
                             </div>
                         </div>
                     </div>
@@ -976,7 +958,15 @@
                             <div class="col-sm-7">
                                 <iframe width="502" height="360" src="https://www.youtube.com/embed/qy7AVRVV_Bw">Sphere</iframe>
                             </div>
-                            <div class="col-sm-5"><p> The first example we look at is that of a spherical object, in this case, a tennis ball. If we break our actuation system down in to two different aspects related to the grasping of the object itself: translation and rotation, we can see that in the case of a spherical object, translational correctness if far more important than rotational correctness. This is true because if we translationally are imprecise in our movement, the parallel gripper will attempt to grip off center of the sphere and will slip off of the object, but any rotation that our system decides to make will not have an effect(as the object is rotationally symmetrical). In the video to the left, we can see that our system is able to grasp the sphere with precise translational movement. </p></div>
+                            <div class="col-sm-5"><p> The first example we look at is that of a spherical object, in
+                                this case, a tennis ball. If we break our actuation system down in to two different aspects
+                                related to the grasping of the object itself: translation and rotation, we can see that
+                                in the case of a spherical object, translational correctness if far more important than
+                                rotational correctness. This is true because if we translationally are imprecise in our
+                                movement, the parallel gripper will attempt to grip off center of the sphere and will
+                                slip off of the object, but any rotation that our system decides to make will not
+                                have an effect(as the object is rotationally symmetrical). In the video to the left,
+                                we can see that our system is able to grasp the sphere with precise translational movement. </p></div>
                         </div>
                     </div>
                 </div>
@@ -994,7 +984,17 @@
                             <div class="col-sm-7">
                                 <iframe width="502" height="360" src="https://www.youtube.com/embed/5q6qTnEPcz4">Rectangular Prism</iframe>
                             </div>
-                            <div class="col-sm-5"><p> The second example we look at is that of a rectangular prism shaped object, a cardboard box. Similarly, we can break our actuation system down into two parts as in the previous example and see that for this object, our system can be given slack on translational correctness, but must be rotationally precise due to the shape of the object. For this shape, any grasp along the long side of the box can be done to achieve a good grasp, but any rotation that does not have an angle for which the parallel grippers lie directly on opposite sides of the long side of the box will result in either a complete inability to lift the object or slipping along the sides which may also lead to a fail unless the object is coerced into a position in which the parallel grippers are able to grab the object (which is still not ideal). In the video to the left, we see that our system is able to grab the box with precise rotational movement. </p></div>
+                            <div class="col-sm-5"><p> The second example we look at is that of a rectangular
+                                prism shaped object, a cardboard box. Similarly, we can break our actuation system down
+                                into two parts as in the previous example and see that for this object, our system
+                                can be given slack on translational correctness, but must be rotationally precise due
+                                to the shape of the object. For this shape, any grasp along the long side of the box
+                                can be done to achieve a good grasp, but any rotation that does not have an angle for
+                                which the parallel grippers lie directly on opposite sides of the long side of the box
+                                will result in either a complete inability to lift the object or slipping along the sides
+                                which may also lead to a fail unless the object is coerced into a position in which the
+                                parallel grippers are able to grab the object (which is still not ideal). In the video
+                                to the left, we see that our system is able to grab the box with precise rotational movement. </p></div>
                         </div>
                     </div>
                 </div>
@@ -1012,7 +1012,18 @@
                             <div class="col-sm-7">
                                 <iframe width="502" height="360" src="https://www.youtube.com/embed/aGL_1sGfrwE">Hat</iframe>
                             </div>
-                            <div class="col-sm-5"><p> The third example we look at is that of an object that is not uniform in shape and has a surface that may be difficult to sense for our system, a hat. If we look at our sensing system, we can see that we rely upon a Gaussian Mixture Model (GMM) in order to estimate the difference between the object on the table and the table itself. If we think about the surface of the hat we use, we can see that it is composed of more than one surface and that the GMM may have trouble understanding difference in levels. However, by using thresholding for our histogram data we collect, we are able to reliably understand the surface of our object and use it for our rotation and movement calculations. In the video to the left, we see that our system is able to grab the hat, but does have slight trouble locking onto the object as the surface is a confusing shape to understand given the Kinect data, and our process to separate the object from the table. </p></div>
+                            <div class="col-sm-5"><p> The third example we look at is that of an object that is
+                                not uniform in shape and has a surface that may be difficult to sense for our system,
+                                a hat. If we look at our sensing system, we can see that we rely upon a
+                                Gaussian Mixture Model (GMM) in order to estimate the difference between the object
+                                on the table and the table itself. If we think about the surface of the hat we use,
+                                we can see that it is composed of more than one surface and that the GMM may have
+                                trouble understanding difference in levels. However, by using thresholding for our
+                                histogram data we collect, we are able to reliably understand the surface of our
+                                object and use it for our rotation and movement calculations. In the video to the
+                                left, we see that our system is able to grab the hat, but does have slight trouble
+                                locking onto the object as the surface is a confusing shape to understand given the
+                                Kinect data, and our process to separate the object from the table. </p></div>
                         </div>
                     </div>
                 </div>
@@ -1031,7 +1042,13 @@
                             <div class="col-sm-7">
                                 <iframe width="502" height="360" src="https://www.youtube.com/embed/CkU-dl9OJFs">Dumbbell</iframe>
                             </div>
-                            <div class="col-sm-5"><p> Finally, the last example we look at is that of an object which has a non-convex shape when viewed from the perspective of the Kinect, a dumbbell. In terms of our sensing system, this object must have both translational and rotational accuracy when grasped, as the object must be grasped within a certain range translationally, and must also be grasped within a certain range rotationally. In the video to the left, we see our system is able to grab the dumbbell, showing robustness to both rotational and translational actuation, as well as robustness in sensing as the shape is not of the usual class of an object. </div>
+                            <div class="col-sm-5"><p> Finally, the last example we look at is that of an object which
+                                has a non-convex shape when viewed from the perspective of the Kinect, a dumbbell.
+                                In terms of our sensing system, this object must have both translational and rotational
+                                accuracy when grasped, as the object must be grasped within a certain range transitionally,
+                                and must also be grasped within a certain range rotationally. In the video to the left,
+                                we see our system is able to grab the dumbbell, showing robustness to both rotational
+                                and translational actuation, as well as robustness in sensing as the shape is not of the usual class of an object. </div>
                         </div>
                     </div>
                 </div>
@@ -1041,16 +1058,41 @@
                 </div>
                 <div id='conclusion-text' class="row main-info">
                     <p>
-                        In terms of the final product we were able to deliver, our solution was able to meet the design criteria we first posed, and was able to go above and beyond in terms of what we set out to accomplish. In particular, one of our main goals of this project was to create a system that was able to grasp not only just a few classes of objects, but a system that was able to attempt and successfully grasp general objects in a variety of orientations and sizes given a few, reasonable constraints.
+                        In terms of the final product we were able to deliver, our solution was able to meet the design
+                        criteria we first posed, and was able to go above and beyond in terms of what we set out to accomplish.
+                        In particular, one of our main goals of this project was to create a system that was able to grasp
+                        not only just a few classes of objects, but a system that was able to attempt and successfully
+                        grasp general objects in a variety of orientations and sizes given a few, reasonable constraints.
                     </p>
                     <p>
-                        Our initial design of using the Kinect mounted onto the wrist of the Sawyer also proved to be a good design choice as our image processing pipeline was able to take advantage of the depth data and produce results that were able to reliably provide location and rotation data to our actuation system.
+                        Our initial design of using the Kinect mounted onto the wrist of the Sawyer also proved to be a
+                        good design choice as our image processing pipeline was able to take advantage of the depth data
+                        and produce results that were able to reliably provide location and rotation data to our actuation system.
                     </p>
                     <p>
-                        There were many difficulties we encountered throughout the process, but two of the major difficulties were not being able to use the Reflex Takktile Gripper and sensing of objects of nonhomogeneous height. Early on, we had many problems with the Reflex Takktile Gripper in terms of API usage and connectivity, and making the decision to change to the parallel grippers was a huge design decision as we lost much of the data that would be accompanied with the Reflex Takktile Gripper, but also were using an API that was simpler to use and understand. A future goal of this project would definitely be to include the Reflex Takktile Gripper and the data that comes with it. The other problem of sensing objects of nonhomogeneous heights was one that we saw with objects like the Lego block. Because of the way our sensing system is designed, objects which had clear two or three levels of height to them were difficult to work with. Another future goal would be to redesign the sensing system so that it is robust to these types of object.s
+                        There were many difficulties we encountered throughout the process, but two of the major
+                        difficulties were not being able to use the Reflex Takktile Gripper and sensing of objects of
+                        nonhomogeneous height. Early on, we had many problems with the Reflex Takktile Gripper in terms
+                        of API usage and connectivity, and making the decision to change to the parallel grippers was a
+                        huge design decision as we lost much of the data that would be accompanied with the Reflex Takktile
+                        Gripper, but also were using an API that was simpler to use and understand. A future goal of this
+                        project would definitely be to include the Reflex Takktile Gripper and the data that comes with it.
+                        The other problem of sensing objects of nonhomogeneous heights was one that we saw with objects
+                        like the Lego block. Because of the way our sensing system is designed, objects which had clear
+                        two or three levels of height to them were difficult to work with. Another future goal would be
+                        to redesign the sensing system so that it is robust to these types of object.s
                     </p>
                     <p>
-                        Our final product contains only a few slight "hacks" depending on the perspective. One is that we use a hardcoded, thresholder value for our sensing pipeline in order to find the difference between the object and the table. In order to this, we can change the sensing system so that it uses a different metric for determining the difference between the object and the table. The other "hack" is that we use a simple box constraint that is the height of the size of the Kinect in order to prevent the Kinect from colliding with the table by constraining the motion plans returned from MoveIt IK. To address this, we can manually change the URDF of the Sawyer to include the dimensions of the Kinect as part of the end effector itself and then remove the box constraint as MoveIt would now remove the motion plans that cause the robot from hitting itself (since the Kinect would effectively be a part of the Sawyer schematic).
+                        Our final product contains only a few slight "hacks" depending on the perspective.
+                        One is that we use a hardcoded, thresholded value for our sensing pipeline in order to find
+                        the difference between the object and the table. In order to this, we can change the sensing system
+                        so that it uses a different metric for determining the difference between the object and the table.
+                        The other "hack" is that we use a simple box constraint that is the height of the size of
+                        the Kinect in order to prevent the Kinect from colliding with the table by constraining the
+                        motion plans returned from MoveIt IK. To address this, we can manually change the URDF of
+                        the Sawyer to include the dimensions of the Kinect as part of the end effector itself and
+                        then remove the box constraint as MoveIt would now remove the motion plans that cause the
+                        robot from hitting itself (since the Kinect would effectively be a part of the Sawyer schematic).
                     </p>
                 </div>
 
@@ -1104,12 +1146,16 @@
                             <div class="col-sm-7">
                                 <h3>About</h3>
                                 <p>
-                                    I'm a third year EECS major who's interested in Mathematics, Machine Learning, and Signals. I was born in Ney York City but grew up in Burbank, California for most of my childhood. My passions include sketching, painting, gymming, and writing music. I also really love reading about math!
+                                    I'm a third year EECS major who's interested in Mathematics, Machine Learning,
+                                    and Signals. I was born in Ney York City but grew up in Burbank, California for most
+                                    of my childhood. My passions include sketching, painting, gymming, and writing music. I also really love reading about math!
                                 </p>
 
                                 <h3>Contributions</h3>
                                 <p> 
-                                    I mostly worked on designing, formalizing, and implementing our image pipeline to localize objects and determine grasping angles. I also contributed to the design choices for constrints versus generalizability and assisted with integrating the image pipeline into the controller.
+                                    I mostly worked on designing, formalizing, and implementing our image pipeline to
+                                    localize objects and determine grasping angles. I also contributed to the design choices
+                                    for constraints versus generalizability and assisted with integrating the image pipeline into the controller.
                                 </p>
                             </div>
                         </div>
@@ -1130,12 +1176,19 @@
                             <div class="col-sm-7">
                                 <h3>About</h3>
                                 <p>
-                                    I'm a third year Computer Science major who's interested in signals processing, computational neuroscience, and machine learning. I was born in a small town called Hillsborough in New Jersey and I'm a really big fan of the west coast.
-                                    I really enjoy taking photos and going on hikes through all the beautiful parks there are in California (we don't have this much beauty back on the east coast). I also draw and play tennis in my free time.
+                                    I'm a third year Computer Science major who's interested in signals processing,
+                                    computational neuroscience, and machine learning. I was born in a small town called
+                                    Hillsborough in New Jersey and I'm a really big fan of the west coast.
+                                    I really enjoy taking photos and going on hikes through all the beautiful parks
+                                    there are in California (we don't have this much beauty back on the east coast). I also draw and play tennis in my free time.
                                 </p>
 
                                 <h3>Contributions</h3>
-                                <p> I worked mainly on helping design and implement the controller and various design decisions regarding the movement of the robot in certain situations, and I wrote code to interface with MoveIt and for the different constraints on the arm during the various stages of execution. I also helped to fine-tune parameters such as that for the static transform and the ones for conversion between the pixel to analog domain.</p>
+                                <p> I worked mainly on helping design and implement the controller and various
+                                    design decisions regarding the movement of the robot in certain situations,
+                                    and I wrote code to interface with MoveIt and for the different constraints on
+                                    the arm during the various stages of execution. I also helped to fine-tune parameters
+                                    such as that for the static transform and the ones for conversion between the pixel to analog domain.</p>
                             </div>
                         </div>
                     </div>
@@ -1145,11 +1198,12 @@
                     <h2>Additional Content</h2>
 
                     <h3>CAD Models: (all .step)</h3>
+                        <p>(downloads may not work on Chrome)</p>
                         <ul>
-                            <li>Full Interface Model</li>
-                            <li>Kinect Clip</li>
-                            <li>Arm Cuff</li>
-                            <li>Old Interface plate (for Takktile Gripper)</li>
+                            <li><a href="/cadFiles/End%20Effector%20Interface%20Final.step" download>Full Interface Model</a></li>
+                            <li><a href="/cadFiles/Kinect%20Bracket.step" download>Kinect Clip</a></li>
+                            <li><a href="/cadFiles/Interface%20Plate%20v2.step" download>Arm Cuff</a></li>
+                            <li><a href="/cadFiles/Interface%20Plate%20v1.step" download>Old Interface plate (for Takktile Gripper)</a></li>
 
                         </ul>
 
@@ -1160,9 +1214,7 @@
                     </ul>
 
                     <h3>Other Videos</h3>
-                    <ul>
-                        <li style="font-weight: bolder"><iframe width="502" height="360" src="https://www.youtube.com/embed/ah8KYrp9HeU">Balloon</iframe></li>
-                    </ul>
+                    <iframe width="502" height="360" src="https://www.youtube.com/embed/ah8KYrp9HeU">Balloon</iframe>
 
                     <h3>Miscellaneous</h3>
                     <ul>
